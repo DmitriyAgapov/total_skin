@@ -1,0 +1,48 @@
+:root {
+  --font-main: Montserrat;
+  --font-headings: Montserrat;
+  --color-text: #14161C;;
+  --color-text-button: #fff;
+  --color-primary: #232B49;
+  --color-primary-90: #E4E7F2;
+  --color-primary-80: #C9CFE5;
+  --color-primary-40: #5C6EB1;
+  --color-primary-hov: #103FE9;
+  --color-secondary: #9DAFBD;
+  --color-text-gray: #979797;
+  --color-background-gradient:  linear-gradient(180deg, #F8FAFA 0%, #FFFFFF 22.99%, rgba(53, 70, 130, 0.73) 67.76%, #232B49 95.83%);
+  --color-background: #fff;
+  --color-border: #3A4262;
+  --color-footer: var(--color-primary);
+  --color-bottom__color_3: #020202;
+
+  /* Text-size styles */
+  /* base size: text__-main (16px) */
+  --h1: 3rem;
+  --h2: 2.5rem;
+  --h3: 2.25rem;
+  --text__-main__-plus: 1.25rem;
+  --text__-main: 1rem;
+  --text__main__minus: 0.875rem;
+  --header__-link: 1.125rem;
+  --subheading: 1.25rem;
+  --discription: 1.25rem;
+  --discription-2: 1rem;
+  --text__botton: 1rem;
+  --text__-botton-2: 1.5rem;
+  --numbers: 5rem;
+  --list: 1rem;
+  --list-14px: 0.75rem;
+  --text__botton-3: 1.25rem;
+
+  /* Effect styles */
+  --shadow-1:  0px 1px 20px rgba(189, 255, 158, 0.14), 0px 10px 20px rgba(189, 255, 158, 0.12), 0px 10px 36px rgba(189, 255, 158, 0.17);
+  --shadow-2:  0px 0px 10px rgba(29, 32, 28, 0.14), 0px 0px 20px rgba(29, 32, 28, 0.12), 0px 0px 36px rgba(34, 40, 37, 0.17);
+  --shadow-3:  0px 0px 10px rgba(29, 32, 28, 0.06), 0px 0px 20px rgba(29, 32, 28, 0.07), 0px 0px 36px rgba(34, 40, 37, 0.07);
+
+  /*Grid*/
+  //--grid-columns: repeat(12, 1fr);
+  //--grid-gap: 2rem;
+  //--grid-section-row: minmax(10vh, auto) 1fr minmax(10vh, auto);
+
+}

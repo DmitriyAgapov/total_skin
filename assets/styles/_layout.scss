@@ -1,0 +1,43 @@
+main, header, footer {
+  overflow-x: hidden;
+}
+
+
+.block {
+  position: relative;
+  z-index: 1;
+  grid-column: 2;
+  grid-row: 1/2;
+  align-self: center;
+}
+
+.block__image {
+  grid-column: 1/-1;
+  position: absolute;
+  top: 0;
+  grid-row: 1/2;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
+
+.block__image-firstplan {
+  z-index: 100;
+
+  img {
+    object-fit: scale-down;
+  }
+}
+
+.block__links {
+  margin-top: 3rem;
+}
+
+.grid {
+  grid-template-columns: var(--grid-columns);
+  gap: var(--grid-gap);
+}
+
+.grid > * {
+  grid-column: 1/-1;
+}
