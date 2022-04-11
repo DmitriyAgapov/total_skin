@@ -17,6 +17,10 @@ export default function Layout({children, page}) {
 	// })
 	// //
 	// console.log(page)
+
+
+	// @ts-ignore
+	// const container = window !== undefined ? () => window().document.body : undefined;
 	return (
 		<>
 			<Head>
@@ -24,6 +28,7 @@ export default function Layout({children, page}) {
 				<meta name="viewport" content="width=device-width, initial-scale=1"/>
 			</Head>
 				<Header/>
+		
 				<Main>{children}</Main>
 
 			<Footer/>

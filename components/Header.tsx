@@ -36,7 +36,7 @@ const Header = () => {
 	return (
 	<HeaderStyled>
 		<Logo />
-		{(screen.desktop || screen.wideDesktop) ? <Nav /> : null}
+		<Nav />
 		<UserBar />
 	</HeaderStyled>
 	)
