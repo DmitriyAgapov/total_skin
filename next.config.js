@@ -25,6 +25,10 @@ module.exports = withKeystone(
                 // ssr and displayName are configured by default
                 styledComponents: true,
             },
+        plugins: [
+            ["@babel/plugin-proposal-decorators", { "legacy": true }],
+            ["@babel/plugin-proposal-class-properties", { "loose": false }]
+        ]
             // async rewrites() {
             //     return [
             //         {

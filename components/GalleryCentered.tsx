@@ -153,11 +153,11 @@ const GalleryCentered = ({images}) => {
 			slidesPerView={3}
 
 			style={{width: '100vw'}}
-			onSlideChange={() => console.log('slide change')}
+			// onSlideChange={() => console.log('slide change')}
 				centeredSlides={true}
 			centeredSlidesBounds={true}
 			modules={[ Navigation, Controller]}
-			onSwiper={(swiper) => console.log(swiper)}
+			// onSwiper={(swiper) => console.log(swiper)}
 
 		>
 			{testGallery}

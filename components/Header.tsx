@@ -31,8 +31,7 @@ const HeaderStyled = styled.header`
     position: relative;
   }`
 const Header = () => {
-	const screen = useWindowSize().viewPort
-	console.log(screen)
+
 	return (
 	<HeaderStyled>
 		<Logo />

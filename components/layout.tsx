@@ -4,11 +4,14 @@ import Head from "next/head";
 import Header from "./Header";
 import styled from "styled-components";
 import {gridColumns} from "./vars";
+import {inject, observer} from "mobx-react";
+inject("mainStore")
 
 const Main = styled.main`
  background: var(--color-background-gradient);
 `;
-export default function Layout({children, page}) {
+
+const Layout  = observer(({children, page}) => {
 	// const {width} = useWindowSize();
 	// const [ burger, setBurger ] = useState(false);
 	// let { sections } = children.prHeaderops
@@ -34,5 +37,7 @@ export default function Layout({children, page}) {
 			<Footer/>
 		</>
 	)
-}
+})
 
+
+export default Layout

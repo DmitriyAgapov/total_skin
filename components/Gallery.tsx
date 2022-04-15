@@ -96,9 +96,9 @@ const Gallery = ({images}) => {
 				rows: 2,
 			}}
 			style={{width: '100vw'}}
-			onSlideChange={() => console.log('slide change')}
+			// onSlideChange={() => console.log('slide change')}
 			modules={[Grid, Navigation, Controller]}
-			onSwiper={(swiper) => console.log(swiper)}
+			// onSwiper={(swiper) => console.log(swiper)}
 		>
 			{testGallery}
 			<div className={'controls'}>

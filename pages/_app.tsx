@@ -7,7 +7,8 @@ import CssBaseline from '@mui/material/CssBaseline';
 import {CacheProvider, EmotionCache} from '@emotion/react';
 import theme from '../assets/theme';
 import createEmotionCache from '../assets/createEmotionCache';
-
+import {observer, Provider} from "mobx-react";
+import MenuStore from "../stores/options";
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
@@ -24,24 +25,30 @@ import {AuthProvider} from '../components/auth';
 // 			? 'http://localhost:3000/api/graphql'
 // 			: '/api/graphql',
 // });
-export default function MyApp(props: MyAppProps) {
+
+const MyApp = (props: MyAppProps) =>{
 // export default function MyApp({Component, pageProps: pageProps}) {
-	const {Component, emotionCache = clientSideEmotionCache, pageProps} = props;
+
+	const {Component, emotionCache = clientSideEmotionCache, pageProps, stores = {MenuStore} } = props;
+
 	return (
 		// <Provider value={client}>
 		// 	<AuthProvider>
-		<CacheProvider value={emotionCache}>
-			<Head>
-				<meta name="viewport" content="initial-scale=1, width=device-width"/>
-			</Head>
-			<ThemeProvider theme={theme}>
-				<Layout page={pageProps.page}>
-					<CssBaseline/>
-					<Component {...pageProps} />
-				</Layout>
-			</ThemeProvider>
-		</CacheProvider>
+        <Provider {...stores}>
+			<CacheProvider value={emotionCache}>
+				<Head>
+					<meta name="viewport" content="initial-scale=1, width=device-width"/>
+				</Head>
+				<ThemeProvider theme={theme}>
+					<Layout page={pageProps.page}>
+						<CssBaseline/>
+						<Component {...pageProps} />
+					</Layout>
+				</ThemeProvider>
+			</CacheProvider>
+        </Provider>
 		///*</AuthProvider>*/}
 		// </Provider>
 	)
 }
+export default MyApp

@@ -3,7 +3,6 @@ import { document } from '@keystone-6/fields-document';
 import { list } from '@keystone-6/core';
 
 import { permissions, rules } from './access';
-import { componentBlocks } from '../schema/fields/content/components';
 
 export const contentListAccess = {
   filter: {
@@ -127,8 +126,8 @@ export const Post = list({
             }`,
         },
       },
-      componentBlocks,
-      ui: { views: require.resolve('./fields/content/components') },
+      // componentBlocks,
+      // ui: { views: require.resolve('./fields/content/components') },
     }),
   },
 });

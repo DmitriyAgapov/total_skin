@@ -8,6 +8,7 @@ import IconButton from "@mui/material/IconButton";
 import * as React from "react";
 import theme from '../assets/theme';
 import Hamburger from "./Hamburger";
+import {inject} from "mobx-react";
 
 const NavStyled = styled.nav`
   grid-column: span 3;
@@ -36,16 +37,18 @@ const NavStyled = styled.nav`
 `
 
 const Nav = () => {
-	const [open, setOpen] = useState(false);
-	const handleDrawerToggle = () => {
-		setOpen(!open);
-	};
+	// const [open, setOpen] = useState(false);
+	// const handleDrawerToggle = () => {
+	// 	setOpen(!open);
+	// };
+
+
 	return (
 		<NavStyled>
 			<ul>
 				<li><Link href={'/'}><a>Shop</a></Link></li>
-				<li><Link href={'/'}><a>About</a></Link></li>
-				<li><Link href={'/'}><a>Contacts</a></Link></li>
+				<li><Link href={'about'}><a>About</a></Link></li>
+				<li><Link href={'contacts'}><a>Contacts</a></Link></li>
 			</ul>
 			<Hamburger />
 		</NavStyled>

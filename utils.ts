@@ -1,29 +1,30 @@
-import {useEffect, useState} from "react";
+import {MutableRefObject, useEffect, useState} from "react";
 
 export const gql = ([content]: TemplateStringsArray) => content;
 
 export async function fetchGraphQL(
-  query: string,
-  variables?: Record<string, any>
+    query: string,
+    variables?: Record<string, any>
 ) {
-  return fetch('http://localhost:3000/api/graphql', {
-    method: 'POST',
-    body: JSON.stringify({ query, variables }),
-    headers: { 'Content-Type': 'application/json' },
-  })
-    .then(x => x.json())
-    .then(({ data, errors }) => {
-      if (errors) {
-        throw new Error(
-          `GraphQL errors occurred:\n${errors
-            .map((x: any) => x.message)
-            .join('\n')}`
-        );
-      }
-      return data;
-    });
+    return fetch('http://localhost:3000/api/graphql', {
+        method: 'POST',
+        body: JSON.stringify({query, variables}),
+        headers: {'Content-Type': 'application/json'},
+    })
+        .then(x => x.json())
+        .then(({data, errors}) => {
+            if (errors) {
+                throw new Error(
+                    `GraphQL errors occurred:\n${errors
+                        .map((x: any) => x.message)
+                        .join('\n')}`
+                );
+            }
+            return data;
+        });
 }
-export const useIntersection = (element, rootMargin) => {
+
+export const useIntersection = (element:any, rootMargin: string) => {
     const [isVisible, setState] = useState(false);
 
     useEffect(() => {
@@ -34,9 +35,10 @@ export const useIntersection = (element, rootMargin) => {
         );
 
         element.current && observer.observe(element.current);
-
-        return () => observer.unobserve(element.current);
-    }, []);
+        console.log(element.current)
+        // @ts-ignore
+        return () => element.current ? observer.unobserve(element.current) : undefined;
+    }, [isVisible]);
 
     return isVisible;
 };

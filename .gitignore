@@ -38,3 +38,4 @@ yarn-error.log*
 app.db
 yarn.lock
 yarn-error.log
+/temp/
