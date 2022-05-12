@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import {CartIcon, FavIcon, SearchIcon, UserIcon} from "./Icons";
 import Link from 'next/link'
+import Hamburger from "./Hamburger";
 
 const Button = styled.button`
   position: absolute;
@@ -25,10 +26,14 @@ const Button = styled.button`
 	}
   `;
 const UserBarStyled = styled.div`
-  grid-column: span 6;
+  grid-column: -8/span 6;
   display: flex;
   gap: 2em;
   justify-content: space-between;
+	@media screen and (max-width: 1024px) {
+		grid-column: span 7;
+		gap: 1em;
+	}
   .search {
     flex: 1 1 auto;
     position: relative;
@@ -44,10 +49,14 @@ const UserBarStyled = styled.div`
   .icons_bar {
     flex: 0;
     display: flex;
-    gap: 2em;
+    gap: 1.5rem;
     justify-content: end;
     margin-left: auto;
-  }  padding: 0 2em;
+	  @media screen and (max-width: 1024px) {
+		  gap: .75rem;
+	  }
+  } 
+	//padding: 0 2em;
   a {
     flex: 1 100%;
     border-bottom: 1px solid transparent;
@@ -80,12 +89,13 @@ const LinkStyled = styled.a`
 const UserBar = () =>
 	<UserBarStyled>
 		<form className={'search'}><input type={"search"} placeholder={'Search'} onSubmit={(event => console.log('search'))} /><Button type={"submit"} ><SearchIcon /></Button></form>
-		<Link href={'#'}><LinkStyled className={'button button-primary'}>Sign up</LinkStyled></Link>
-		<div className={'icons_bar'}>
-		<Link href={'#'}><LinkStyled><UserIcon /></LinkStyled></Link>
-		<Link href={'#'}><LinkStyled><FavIcon /></LinkStyled></Link>
-		<Link href={'#'}><LinkStyled><CartIcon /></LinkStyled></Link>
-		</div>
+			<Link href={'#'}><LinkStyled className={'button button-primary'}>Sign up</LinkStyled></Link>
+			<div className={'icons_bar'}>
+				<Link href={'#'}><LinkStyled><UserIcon /></LinkStyled></Link>
+				<Link href={'#'}><LinkStyled><FavIcon /></LinkStyled></Link>
+				<Link href={'#'}><LinkStyled><CartIcon /></LinkStyled></Link>
+			</div>
+			<Hamburger />
 	</UserBarStyled>
 
 export default UserBar

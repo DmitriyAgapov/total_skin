@@ -6,7 +6,12 @@ const LogoA = styled.div`
   align-content: center;
   display: flex;
   align-self: center;
+	min-width: 200px;
   grid-column: 2/span 3;
+	@media screen and (max-width: 1024px) {
+		min-width: 160px;
+		grid-column: 2/span 2;
+	}
   a {
     display: inline-block;
     flex: 1 auto;

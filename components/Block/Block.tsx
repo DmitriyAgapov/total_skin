@@ -2,6 +2,7 @@ import React from "react";
 // @ts-ignore
 import styled from "styled-components";
 import {gridColumns, gridGap} from "../vars";
+import Link from "next/link";
 
 
 const BlockStyled = styled.div`
@@ -14,7 +15,7 @@ const BlockStyled = styled.div`
   }
   .description {
     grid-column: ${((props: { title: any; }) => (typeof props?.title == "object") ? `6/span 7` :  `span 8`)};
-    font-size: 125%;
+    //font-size: 125%;
     padding:  1em 2em;
   }
 `;

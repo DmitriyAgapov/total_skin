@@ -4,6 +4,8 @@ import {gridColumns, gridColumns_tablet, gridGap} from "./vars";
 import Nav from "./Nav";
 import UserBar from "./UserBar";
 import {useWindowSize} from "../utils";
+import Hamburger from "./Hamburger";
+import * as React from "react";
 
 const HeaderStyled = styled.header`
   position: relative;
@@ -18,6 +20,11 @@ const HeaderStyled = styled.header`
   @media screen and (max-width: 1024px){
     grid-template-columns: calc((100vw - 109rem - ${gridGap}) / 2) ${gridColumns_tablet} calc((100vw - 109rem - ${gridGap}) / 2);
   }
+ @media screen and (max-width: 768px){
+    grid-template-columns: .75rem ${gridColumns_tablet} .75rem;
+	 gap: .5rem;
+  }
+	
   gap: 0 ${gridGap};
   //grid-template-columns: calc((100vw - 76rem) / 2) 1fr calc((100vw - 76rem) / 2);
   z-index: 100;
@@ -37,6 +44,7 @@ const Header = () => {
 		<Logo />
 		<Nav />
 		<UserBar />
+
 	</HeaderStyled>
 	)
 }

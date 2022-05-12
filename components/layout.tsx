@@ -5,13 +5,17 @@ import Header from "./Header";
 import styled from "styled-components";
 import {gridColumns} from "./vars";
 import {inject, observer} from "mobx-react";
+import {useWindowSize} from "../utils";
 inject("mainStore")
 
 const Main = styled.main`
  background: var(--color-background-gradient);
+	min-height: 100vh;
 `;
 
-const Layout  = observer(({children, page}) => {
+const Layout  = inject('MenuStore')(observer(({MenuStore, children, page, width}) => {
+	MenuStore.Width.setWidth(useWindowSize().windowSize.width)
+	// console.log(MenuStore.Width.value)
 	// const {width} = useWindowSize();
 	// const [ burger, setBurger ] = useState(false);
 	// let { sections } = children.prHeaderops
@@ -19,7 +23,7 @@ const Layout  = observer(({children, page}) => {
 	// 	setBurger((width < 768 && width > 0)  ? true : false)
 	// })
 	// //
-	// console.log(page)
+
 
 
 	// @ts-ignore
@@ -37,7 +41,7 @@ const Layout  = observer(({children, page}) => {
 			<Footer/>
 		</>
 	)
-})
+}))
 
 
 export default Layout

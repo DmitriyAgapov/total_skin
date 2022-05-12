@@ -18,6 +18,7 @@ interface MyAppProps extends AppProps {
 
 // import {createClient, Provider} from 'urql';
 import {AuthProvider} from '../components/auth';
+import {useWindowSize} from "../utils";
 
 // export const client = createClient({
 // 	url:
@@ -28,7 +29,7 @@ import {AuthProvider} from '../components/auth';
 
 const MyApp = (props: MyAppProps) =>{
 // export default function MyApp({Component, pageProps: pageProps}) {
-
+	let width = useWindowSize().windowSize.width;
 	const {Component, emotionCache = clientSideEmotionCache, pageProps, stores = {MenuStore} } = props;
 
 	return (
@@ -40,7 +41,7 @@ const MyApp = (props: MyAppProps) =>{
 					<meta name="viewport" content="initial-scale=1, width=device-width"/>
 				</Head>
 				<ThemeProvider theme={theme}>
-					<Layout page={pageProps.page}>
+					<Layout page={pageProps.page}  width={width}>
 						<CssBaseline/>
 						<Component {...pageProps} />
 					</Layout>

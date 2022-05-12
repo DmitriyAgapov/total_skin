@@ -13,17 +13,26 @@ const SectionStyled = styled.section`
   @media screen and (max-width: 1024px){
     grid-template-columns: calc((100vw - 109rem - ${gridGap}) / 2) ${gridColumns_tablet} calc((100vw - 109rem - ${gridGap}) / 2);
   }
-  gap: ${gridGap};
+	&.inverse-true {
+		color: #fafafa;
+	}
+  gap: 5em ${gridGap};
   margin: 7rem 0;
   & + & {
     margin-top: 7rem;
     margin-bottom: 7rem;
   }
+
+	&.section-page {
+		margin-top: 0rem;
+		padding-top: 4rem;
+	}
 `;
 
-const Section = ({children}) => {
+const Section = ({children, variant = false}) => {
+
 	return(
-	<SectionStyled>
+	<SectionStyled className={`${variant}`}>
 		{children}
 	</SectionStyled>
 )

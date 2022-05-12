@@ -12,6 +12,13 @@ declare module '@mui/material/styles' {
 }
 // Create a theme instance.
 const theme = createTheme({
+
+	typography: {
+		fontFamily: 'Montserrat',
+		allVariants: {
+			lineHeight: 1.65
+		}
+	},
 	breakpoints: {
 		values: {
 			xs: 0,

@@ -66,11 +66,9 @@ const HamburgerStyled = styled.div`
 `
 
 const Hamburger = inject('MenuStore')(observer(({MenuStore}) => {
+
 		 return (
-			<div>
-				<a  onClick={()=> {MenuStore.Open.toggleState()}}>toggle</a>
-				<a  onClick={()=> {MenuStore.Open.setOpen()}}>open</a>
-				<a  onClick={()=> {MenuStore.Open.setClose()}}>close</a>
+			<div style={{alignSelf: "center"}}>
 				<a    onClick={() => { MenuStore.Open.toggleState() }}>
 				<HamburgerStyled className={MenuStore.Open.state ? 'is-active' : ''}>
 					<span className={'line'}/>

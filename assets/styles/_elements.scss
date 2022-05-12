@@ -3,15 +3,12 @@
   &__link {
 	color: var(--color-primary);
   }
-
   &__links {
 	list-style: none;
 	margin: 0;
 	padding: 0;
 	font-size: 1.125rem;
-
   }
-
   &__item {
 	padding-left: 0;
   }
@@ -22,7 +19,7 @@
 .button {
   box-sizing: border-box;
   display: inline-block;
-
+	min-width: 10rem;
   white-space: nowrap;
   cursor: pointer;
   font-weight: 500;
@@ -52,13 +49,15 @@
 	color: white;
 	border: 1px solid var(--color-primary);
 	background: var(--color-primary);
-	//box-shadow: 0px 0px 36px rgba(189, 255, 158, 0.17), 0px 0px 20px rgba(189, 255, 158, 0.12), 0px 0px 10px rgba(189, 255, 158, 0.14);
-
+	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.14), 0px 4px 14px rgba(0, 0, 0, 0.18), 0px 4px 16px rgba(0, 0, 0, 0.2);
+	  //box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+z-index: 200;
+	  position: relative;
 	&:hover, &:focus {
 	  color: white;
 	  border: 1px solid var(--color-primary-hov);
 	  background: var(--color-primary-hov);
-	  //box-shadow: 0px 0px 36px rgba(189, 255, 158, 0.17), 0px 0px 20px rgba(189, 255, 158, 0.12), 0px 0px 10px rgba(189, 255, 158, 0.14);
+		box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.18), 0px 4px 14px rgba(0, 0, 0, 0.2), 0px 4px 18px rgba(0, 0, 0, 0.24);
 	}
   }
 
