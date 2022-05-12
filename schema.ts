@@ -221,5 +221,229 @@ export const lists = {
 				many: false
 			}),
 		},
+	}),
+
+	ProductCategory: list({
+		fields: {
+			title: text({
+
+			}),
+			slug: text({
+				ui: { createView: { fieldMode: 'hidden' } },
+				isIndexed: 'unique',
+				hooks: {
+					resolveInput: ({ operation, resolvedData, inputData, context }) => {
+						if (operation === 'create' && !inputData.slug) {
+							return defaultSlug({ context, inputData });
+						}
+						return resolvedData.slug;
+					}
+				}
+			}),
+			status: select({
+				options: [
+					{ label: 'Draft', value: 'draft' },
+					{ label: 'Published', value: 'published' },
+					{ label: 'Archived', value: 'archived' },
+				],
+				defaultValue: 'draft',
+				ui: { displayMode: 'segmented-control' },
+			}),
+			image: image({}),
+			content: document({
+				formatting: true,
+				dividers: true,
+				links: true,
+				layouts: [
+					[1, 1],
+					[1, 1, 1],
+				],
+			}),
+		}
+	}),
+	ProductSkinConcern: list({
+		fields: {
+			title: text({
+
+			}),
+			slug: text({
+				ui: { createView: { fieldMode: 'hidden' } },
+				isIndexed: 'unique',
+				hooks: {
+					resolveInput: ({ operation, resolvedData, inputData, context }) => {
+						if (operation === 'create' && !inputData.slug) {
+							return defaultSlug({ context, inputData });
+						}
+						return resolvedData.slug;
+					}
+				}
+			}),
+			status: select({
+				options: [
+					{ label: 'Draft', value: 'draft' },
+					{ label: 'Published', value: 'published' },
+					{ label: 'Archived', value: 'archived' },
+				],
+				defaultValue: 'draft',
+				ui: { displayMode: 'segmented-control' },
+			}),
+			image: image({}),
+			content: document({
+				formatting: true,
+				dividers: true,
+				links: true,
+				layouts: [
+					[1, 1],
+					[1, 1, 1],
+				],
+			}),
+		}
+	}),
+	ProductSkinCareItemType: list({
+		fields: {
+			title: text({
+
+			}),
+			slug: text({
+				ui: { createView: { fieldMode: 'hidden' } },
+				isIndexed: 'unique',
+				hooks: {
+					resolveInput: ({ operation, resolvedData, inputData, context }) => {
+						if (operation === 'create' && !inputData.slug) {
+							return defaultSlug({ context, inputData });
+						}
+						return resolvedData.slug;
+					}
+				}
+			}),
+			status: select({
+				options: [
+					{ label: 'Draft', value: 'draft' },
+					{ label: 'Published', value: 'published' },
+					{ label: 'Archived', value: 'archived' },
+				],
+				defaultValue: 'draft',
+				ui: { displayMode: 'segmented-control' },
+			}),
+			image: image({}),
+			content: document({
+				formatting: true,
+				dividers: true,
+				links: true,
+				layouts: [
+					[1, 1],
+					[1, 1, 1],
+				],
+			}),
+		}
+	}),
+	ProductVariant: list({
+		fields: {
+			title: text(),
+			value: text(),
+			price: integer(),
+			product: relationship({
+				ref: 'Product'
+			}),
+		}
+	}),
+	Product: list({
+		fields: {
+			sku: text(),
+			series: text(),
+			title: text({
+
+			}),
+			slug: text({
+				ui: { createView: { fieldMode: 'hidden' } },
+				isIndexed: 'unique',
+				hooks: {
+					resolveInput: ({ operation, resolvedData, inputData, context }) => {
+						if (operation === 'create' && !inputData.slug) {
+							return defaultSlug({ context, inputData });
+						}
+						return resolvedData.slug;
+					}
+				}
+			}),
+			status: select({
+				options: [
+					{ label: 'Draft', value: 'draft' },
+					{ label: 'Published', value: 'published' },
+					{ label: 'Archived', value: 'archived' },
+				],
+				defaultValue: 'draft',
+				ui: { displayMode: 'segmented-control' },
+			}),
+			date: timestamp({
+				hooks: {
+					resolveInput: ({ inputData, operation, resolvedData }) => {
+						if (operation === 'create' && !inputData.slug) {
+							return defaultTimestamp();
+						}
+						return resolvedData.slug;
+					}
+				}
+			}),
+			image: image({}),
+			shortDesc: document({
+				formatting: true,
+				dividers: true,
+				links: true,
+				layouts: [
+					[1, 1],
+					[1, 1, 1],
+				],
+			}),
+			productVariant: relationship({
+				ref: 'ProductVariant',
+				many: true
+			}),
+			description: document({
+				formatting: true,
+				dividers: true,
+				links: true,
+				layouts: [
+					[1, 1],
+					[1, 1, 1],
+				],
+			}),
+			benefit: document({
+				formatting: true,
+				dividers: true,
+				links: true,
+				layouts: [
+					[1, 1],
+					[1, 1, 1],
+				],
+			}),
+			ingridient: document({
+				formatting: true,
+				dividers: true,
+				links: true,
+				layouts: [
+					[1, 1],
+					[1, 1, 1],
+				],
+			}),
+			application: document({
+				formatting: true,
+				dividers: true,
+				links: true,
+				layouts: [
+					[1, 1],
+					[1, 1, 1],
+				],
+			}),
+			category: relationship({
+				ref: 'ProductCategory'
+			}),
+			SkinConcern: relationship({
+				ref: 'ProductSkinConcern'
+			}),
+			SkinCareItemType: relationship({
+				ref: 'ProductSkinCareItemType'
+			}),
+		}
 	})
 };

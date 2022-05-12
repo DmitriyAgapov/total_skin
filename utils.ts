@@ -1,5 +1,6 @@
 import {MutableRefObject, useEffect, useState} from "react";
-
+import excelToJson from "convert-excel-to-json";
+import fs from 'fs';
 export const gql = ([content]: TemplateStringsArray) => content;
 
 export async function fetchGraphQL(
@@ -23,7 +24,13 @@ export async function fetchGraphQL(
             return data;
         });
 }
-
+export const excelTojs = (excelFile: string) => {
+    source: fs.readFileSync('SOME-EXCEL-FILE.xlsx')
+    let data =  excelToJson({
+        sourceFile: excelFile
+    });
+    return data
+}
 export const useIntersection = (element:any, rootMargin: string) => {
     const [isVisible, setState] = useState(false);
 

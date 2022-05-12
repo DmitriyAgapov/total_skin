@@ -72,3 +72,93 @@ model Post {
 
   @@index([authorId])
 }
+
+model ProductCategory {
+  id                    String    @id @default(cuid())
+  title                 String    @default("")
+  slug                  String    @unique @default("")
+  status                String?   @default("draft")
+  image_filesize        Int?
+  image_extension       String?
+  image_width           Int?
+  image_height          Int?
+  image_mode            String?
+  image_id              String?
+  content               Json      @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  from_Product_category Product[] @relation("Product_category")
+}
+
+model ProductSkinConcern {
+  id                       String    @id @default(cuid())
+  title                    String    @default("")
+  slug                     String    @unique @default("")
+  status                   String?   @default("draft")
+  image_filesize           Int?
+  image_extension          String?
+  image_width              Int?
+  image_height             Int?
+  image_mode               String?
+  image_id                 String?
+  content                  Json      @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  from_Product_SkinConcern Product[] @relation("Product_SkinConcern")
+}
+
+model ProductSkinCareItemType {
+  id                            String    @id @default(cuid())
+  title                         String    @default("")
+  slug                          String    @unique @default("")
+  status                        String?   @default("draft")
+  image_filesize                Int?
+  image_extension               String?
+  image_width                   Int?
+  image_height                  Int?
+  image_mode                    String?
+  image_id                      String?
+  content                       Json      @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  from_Product_SkinCareItemType Product[] @relation("Product_SkinCareItemType")
+}
+
+model ProductVariant {
+  id                          String    @id @default(cuid())
+  title                       String    @default("")
+  value                       String    @default("")
+  price                       Int?
+  product                     Product?  @relation("ProductVariant_product", fields: [productId], references: [id])
+  productId                   String?   @map("product")
+  from_Product_productVariant Product[] @relation("Product_productVariant")
+
+  @@index([productId])
+}
+
+model Product {
+  id                          String                   @id @default(cuid())
+  sku                         String                   @default("")
+  series                      String                   @default("")
+  title                       String                   @default("")
+  slug                        String                   @unique @default("")
+  status                      String?                  @default("draft")
+  date                        DateTime?
+  image_filesize              Int?
+  image_extension             String?
+  image_width                 Int?
+  image_height                Int?
+  image_mode                  String?
+  image_id                    String?
+  shortDesc                   Json                     @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  productVariant              ProductVariant[]         @relation("Product_productVariant")
+  description                 Json                     @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  benefit                     Json                     @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  ingridient                  Json                     @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  application                 Json                     @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  category                    ProductCategory?         @relation("Product_category", fields: [categoryId], references: [id])
+  categoryId                  String?                  @map("category")
+  SkinConcern                 ProductSkinConcern?      @relation("Product_SkinConcern", fields: [SkinConcernId], references: [id])
+  SkinConcernId               String?                  @map("SkinConcern")
+  SkinCareItemType            ProductSkinCareItemType? @relation("Product_SkinCareItemType", fields: [SkinCareItemTypeId], references: [id])
+  SkinCareItemTypeId          String?                  @map("SkinCareItemType")
+  from_ProductVariant_product ProductVariant[]         @relation("ProductVariant_product")
+
+  @@index([categoryId])
+  @@index([SkinConcernId])
+  @@index([SkinCareItemTypeId])
+}
