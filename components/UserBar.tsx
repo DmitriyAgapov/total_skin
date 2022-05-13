@@ -82,6 +82,7 @@ const UserBarStyled = styled.div`
 `
 const LinkStyled = styled.a`
   &.button {
+	  min-width: 10rem;
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
   }
 

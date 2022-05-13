@@ -2,17 +2,13 @@ import {InferGetServerSidePropsType, InferGetStaticPropsType} from 'next';
 import React, {useEffect, useState} from 'react';
 import {query} from '.keystone/api';
 import {Lists} from '.keystone/types';
-import Section from '../components/Section/Section';
-import Block from "../components/Block/Block";
-import photo from '../assets/images/images/cards/1.png'
-import photo2 from '../assets/images/images/cards/2.png'
-import photo3 from '../assets/images/images/cards/3.png'
-import nophoto1 from '../assets/images/images/nophoto.jpg'
-import method from '../assets/images/images/method.jpg'
-import method1 from '../assets/images/images/method1.jpg'
-import method2 from '../assets/images/images/method2.jpg'
-import CardGood from "../components/Cards/CardGood";
-import {excelTojs} from "../utils";
+import Section from '../../components/Section/Section';
+import Block from "../../components/Block/Block";
+import photo from '../../assets/images/images/cards/1.png'
+import photo2 from '../../assets/images/images/cards/2.png'
+import photo3 from '../../assets/images/images/cards/3.png'
+import CardGood from "../../components/Cards/CardGood";
+import data from './../../data';
 
 type Post = {
 	id: string;
@@ -28,6 +24,7 @@ type Section = {
 	style: object;
 	url: string;
 	image: object;
+	variant: string
 	items: [];
 	background?: object;
 	video?: object;
@@ -52,16 +49,17 @@ export default function AboutPage() {
 		photo, photo2, photo3
 	]
 
-	return (<>
+
+	return (
 			<Section variant={"section-page"}>
 				<Block title={'Shop'}>
-					<div className={'block__items'}>
-						<CardGood />
+					<div className={'block__items grid'}>
+						{data.Valmont.map(item => <CardGood key={item.SKU} props={item} />)}
+
 					</div>
 				</Block>
-				<a onClick={excelTojs('../files/test.xls')}>Excel</a>
 			</Section>
-		</>
+
 	);
 }
 

@@ -9,7 +9,7 @@ import * as React from "react";
 
 const HeaderStyled = styled.header`
   position: relative;
-
+	background: white;
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
 	border-bottom: 2px solid  #232B49;

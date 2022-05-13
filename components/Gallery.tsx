@@ -104,6 +104,8 @@ const GalleryStyled = styled.div`
     gap: 1.5em;
     margin-left: auto;
     margin-right: 5em;
+position: relative;
+    z-index: 100;
 
     .arrow {
       border-radius: 50%;
@@ -171,14 +173,14 @@ const Gallery = ({images, imgtwo, articles}) => {
         for (let i = 0, c = images.length; i < c; i++) {
             testGallery.push(
                 <SwiperSlide key={i}>
-                    <Image src={images[i].src} layout={'responsive'} width={images[i].width} height={images[i].height}/>
+                    <Image src={images[i].src} layout={'responsive'} width={'16rem'} height={'10rem'} objectFit={'scale-down'}/>
                 </SwiperSlide>
             )
         }
         for (let i = 0, c = imgtwo.length; i < c; i++) {
             testGallery.push(
                 <SwiperSlide key={i + 25}>
-                    <Image src={imgtwo[i].src} layout={'responsive'} width={imgtwo[i].width} height={imgtwo[i].height}/>
+                    <Image src={imgtwo[i].src} layout={'responsive'}width={'16rem'} height={'10rem'} objectFit={'scale-down'}/>
                 </SwiperSlide>
             )
         }
@@ -200,7 +202,7 @@ const Gallery = ({images, imgtwo, articles}) => {
     return (
         <GalleryStyled $mode={articles ? 'article' : null}>
             <Swiper
-                spaceBetween={articles ? 60 : 20}
+                spaceBetween={articles ? 60 : 40}
                 slidesPerView={!articles ? "auto" : 3}
                 centeredSlides={!articles ? false : true}
                 // centeredSlidesBounds={true}
@@ -210,7 +212,7 @@ const Gallery = ({images, imgtwo, articles}) => {
                 }}
 
 
-                style={{width: '100vw'}}
+
                 // onSlideChange={() => console.log('slide change')}
                 modules={[Grid, Navigation, Controller]}
                 // onSwiper={(swiper) => console.log(swiper)}

@@ -1,13 +1,15 @@
 import React from "react";
+
 // @ts-ignore
-import styled from "styled-components";
+import styled from 'styled-components';
 import {gridColumns, gridGap} from "../vars";
 import Link from "next/link";
 
 
-const BlockStyled = styled.div`
+export const BlockStyled = styled.div`
 	grid-column: 2/-2;
   display: grid;
+
   grid-template-columns: ${gridColumns} ;
   gap: ${gridGap};
   h2 {
@@ -24,7 +26,7 @@ const Block = ({children = null, title = null, description = null, gallery = nul
 	// console.log(gallery)
 
 	return (
-	<BlockStyled title={title}>
+	<BlockStyled>
 		{title ? <h2>{title}</h2> : null}
 
 		{description ? <div className={'description'}

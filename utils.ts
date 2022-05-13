@@ -1,6 +1,5 @@
 import {MutableRefObject, useEffect, useState} from "react";
-import excelToJson from "convert-excel-to-json";
-import fs from 'fs';
+
 export const gql = ([content]: TemplateStringsArray) => content;
 
 export async function fetchGraphQL(

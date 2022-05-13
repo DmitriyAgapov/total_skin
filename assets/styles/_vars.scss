@@ -2,6 +2,8 @@
   --font-main: Montserrat;
   --font-headings: Montserrat;
   --color-text: #14161C;;
+  --color-text-second: #9E9FA3;
+  --color-link: rgba(85, 119, 242, 1);
   --color-text-button: #fff;
   --color-primary: #232B49;
   --color-primary-90: #E4E7F2;
@@ -12,6 +14,8 @@
   --color-text-gray: #979797;
   --color-background-gradient:  linear-gradient(180deg, #F8FAFA 0%, #FFFFFF 22.99%, rgba(53, 70, 130, 0.73) 67.76%, #232B49 95.83%);
   --color-background: #fff;
+  --color-background-podlozhka: rgba(189, 194, 212, 0.5);
+  --color-background-product: #ECEFF8;
   --color-border: #3A4262;
   --color-footer: var(--color-primary);
   --color-bottom__color_3: #020202;
@@ -41,7 +45,16 @@
   --shadow-3:  0px 0px 10px rgba(29, 32, 28, 0.06), 0px 0px 20px rgba(29, 32, 28, 0.07), 0px 0px 36px rgba(34, 40, 37, 0.07);
 
   /*Grid*/
-  //--grid-columns: repeat(12, 1fr);
+  --grid-columns: repeat(12, 1fr);
+  --grid-gap: 2rem;
+  @media screen and  (max-width: 1024px) {
+    --grid-columns: repeat(8, 1fr);
+
+  }
+  @media screen and  (max-width: 768px) {
+    --grid-columns: repeat(4, 1fr);
+
+  }
   //--grid-gap: 2rem;
   //--grid-section-row: minmax(10vh, auto) 1fr minmax(10vh, auto);
 

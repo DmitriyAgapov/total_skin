@@ -152,7 +152,6 @@ const GalleryCentered = ({images}) => {
 			spaceBetween={20}
 			slidesPerView={3}
 
-			style={{width: '100vw'}}
 			// onSlideChange={() => console.log('slide change')}
 				centeredSlides={true}
 			centeredSlidesBounds={true}

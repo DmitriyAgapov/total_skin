@@ -49,7 +49,7 @@ export default function ContactsPage() {
 	]
 	return (<>
 
-			<Section>
+			<Section variant={"section-page"}>
 				<Block title={'Contacts'}
 				       description={<p>If you’ve followed along with the leaks in recent <a>weeks</a>, none of the new
 					       features will surprise you. It’s also not a huge surprise that Google is bringing some

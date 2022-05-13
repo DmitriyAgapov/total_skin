@@ -8,7 +8,8 @@ import Nav from "./Nav";
 const FooterStyled = styled.footer`
   position: relative;
   padding-top: 3em;
-  margin-top: -7em;
+	z-index: 20;
+  //margin-top: -7em;
   padding-bottom: 4.5em;
   border-bottom: 2px solid #232B49;
   top: 0;

@@ -5,10 +5,20 @@ import {gridColumns, gridColumns_tablet, gridGap} from "../vars";
 
 
 const SectionStyled = styled.section`
-  overflow: hidden;
+
   position: relative;
   display: grid;
   z-index: 1;
+	&.page__product {
+		&:before {
+			content: '';
+			width: 60vw;
+			min-height: 140vh;
+			position: absolute;
+			top: -20vh;
+			background-color:  var(--color-background-podlozhka);
+		}
+	}
   grid-template-columns: calc((100vw - 109rem - ${gridGap}) / 2) ${gridColumns} calc((100vw - 109rem - ${gridGap}) / 2);
   @media screen and (max-width: 1024px){
     grid-template-columns: calc((100vw - 109rem - ${gridGap}) / 2) ${gridColumns_tablet} calc((100vw - 109rem - ${gridGap}) / 2);
@@ -16,8 +26,11 @@ const SectionStyled = styled.section`
 	&.inverse-true {
 		color: #fafafa;
 	}
-  gap: 5em ${gridGap};
+  gap: 4rem ${gridGap};
   margin: 7rem 0;
+&:last-child {
+	margin-bottom: 0 !important;
+}
   & + & {
     margin-top: 7rem;
     margin-bottom: 7rem;
@@ -29,7 +42,7 @@ const SectionStyled = styled.section`
 	}
 `;
 
-const Section = ({children, variant = false}) => {
+const Section = ({children, variant = ''}) => {
 
 	return(
 	<SectionStyled className={`${variant}`}>
