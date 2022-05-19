@@ -3,11 +3,11 @@ import Footer from './Footer'
 import Head from "next/head";
 import Header from "./Header";
 import styled from "styled-components";
-import {gridColumns} from "./vars";
 import {inject, observer} from "mobx-react";
 import {useWindowSize} from "../utils";
-inject("mainStore")
-import svgbg from  './images/bgsvg.png';
+import MenuStore from "../stores/options";
+
+
 const Main = styled.main`
  background: var(--color-background-gradient);
 	min-height: 100vh;
@@ -46,24 +46,13 @@ const Main = styled.main`
 	}
 `;
 
-const Layout  = inject('MenuStore')(observer(({MenuStore, children, page, width}) => {
+const Layout  = observer(({children}) => {
 	MenuStore.Width.setWidth(useWindowSize().windowSize.width)
-	// console.log(MenuStore.Width.value)
-	// const {width} = useWindowSize();
-	// const [ burger, setBurger ] = useState(false);
-	// let { sections } = children.prHeaderops
-	// useEffect(()=> {
-	// 	setBurger((width < 768 && width > 0)  ? true : false)
-	// })
-	// //
 	let stripe = [];
-
 	for(let i = 0; i < 100; i++) {
 		stripe.push(
 			<div className={'bg_row'}></div>)
 	}
-
-
 	// @ts-ignore
 	// const container = window !== undefined ? () => window().document.body : undefined;
 	return (
@@ -79,7 +68,7 @@ const Layout  = inject('MenuStore')(observer(({MenuStore, children, page, width}
 			<Footer/>
 		</>
 	)
-}))
+})
 
 
 export default Layout

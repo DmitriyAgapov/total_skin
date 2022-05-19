@@ -1,3 +1,4 @@
+import { error } from "console";
 import {MutableRefObject, useEffect, useState} from "react";
 
 export const gql = ([content]: TemplateStringsArray) => content;
@@ -6,30 +7,27 @@ export async function fetchGraphQL(
     query: string,
     variables?: Record<string, any>
 ) {
-    return fetch('http://localhost:3000/api/graphql', {
-        method: 'POST',
-        body: JSON.stringify({query, variables}),
-        headers: {'Content-Type': 'application/json'},
-    })
-        .then(x => x.json())
-        .then(({data, errors}) => {
-            if (errors) {
-                throw new Error(
-                    `GraphQL errors occurred:\n${errors
-                        .map((x: any) => x.message)
-                        .join('\n')}`
-                );
-            }
-            return data;
-        });
-}
-export const excelTojs = (excelFile: string) => {
-    source: fs.readFileSync('SOME-EXCEL-FILE.xlsx')
-    let data =  excelToJson({
-        sourceFile: excelFile
-    });
+    let data: any[] | PromiseLike<any[]> = [];
+    fetch('http://localhost:3000/api/graphql', {
+                method: 'POST',
+                body: JSON.stringify({query, variables}),
+                headers: {'Content-Type': 'application/json'},
+            })
+        .then((res) => res.json())
+        .then((result) => {
+            console.log(result)
+            data.push(result)
+            return result
+        })
     return data
 }
+// export const excelTojs = (excelFile: string) => {
+//     source: fs.readFileSync('SOME-EXCEL-FILE.xlsx')
+//     let data =  excelToJson({
+//         sourceFile: excelFile
+//     });
+//     return data
+// }
 export const useIntersection = (element:any, rootMargin: string) => {
     const [isVisible, setState] = useState(false);
 

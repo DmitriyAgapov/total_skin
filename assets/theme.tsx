@@ -28,6 +28,36 @@ const theme = createTheme({
 			xl: 1536,
 		},
 	},
+	components: {
+
+		MuiOutlinedInput: {
+			defaultProps: {
+				style: {
+
+					minHeight: "initial",
+					borderRadius: 0,
+					backgroundColor: '#ECEFF8'
+
+				}
+			}
+		},
+		MuiSelect: {
+			variants: [
+				{
+					props: { variant: 'standard' },
+					style: {
+						// "::before":
+						display: 'flex',
+						// minHeight: '3rem',
+						alignItems: 'center',
+						lineHeight: '2.5rem'
+
+					},
+				},
+
+			],
+		},
+	},
 	palette: {
 		text: {
 			primary: '#14161C',

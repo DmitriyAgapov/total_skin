@@ -502,6 +502,57 @@ input UserRelateToOneForCreateInput {
   connect: UserWhereUniqueInput
 }
 
+type Brand {
+  id: ID!
+  title: String
+  logo: ImageFieldOutput
+  content: Brand_content_Document
+  slug: String
+}
+
+type Brand_content_Document {
+  document(hydrateRelationships: Boolean! = false): JSON!
+}
+
+input BrandWhereUniqueInput {
+  id: ID
+  slug: String
+}
+
+input BrandWhereInput {
+  AND: [BrandWhereInput!]
+  OR: [BrandWhereInput!]
+  NOT: [BrandWhereInput!]
+  id: IDFilter
+  title: StringFilter
+  slug: StringFilter
+}
+
+input BrandOrderByInput {
+  id: OrderDirection
+  title: OrderDirection
+  slug: OrderDirection
+}
+
+input BrandUpdateInput {
+  title: String
+  logo: ImageFieldInput
+  content: JSON
+  slug: String
+}
+
+input BrandUpdateArgs {
+  where: BrandWhereUniqueInput!
+  data: BrandUpdateInput!
+}
+
+input BrandCreateInput {
+  title: String
+  logo: ImageFieldInput
+  content: JSON
+  slug: String
+}
+
 type ProductCategory {
   id: ID!
   title: String
@@ -735,6 +786,7 @@ type Product {
   sku: String
   series: String
   title: String
+  brand: Brand
   slug: String
   status: String
   date: DateTime
@@ -809,6 +861,7 @@ input ProductWhereInput {
   sku: StringFilter
   series: StringFilter
   title: StringFilter
+  brand: BrandWhereInput
   slug: StringFilter
   status: StringNullableFilter
   date: DateTimeNullableFilter
@@ -838,6 +891,7 @@ input ProductUpdateInput {
   sku: String
   series: String
   title: String
+  brand: BrandRelateToOneForUpdateInput
   slug: String
   status: String
   date: DateTime
@@ -851,6 +905,12 @@ input ProductUpdateInput {
   category: ProductCategoryRelateToOneForUpdateInput
   SkinConcern: ProductSkinConcernRelateToOneForUpdateInput
   SkinCareItemType: ProductSkinCareItemTypeRelateToOneForUpdateInput
+}
+
+input BrandRelateToOneForUpdateInput {
+  create: BrandCreateInput
+  connect: BrandWhereUniqueInput
+  disconnect: Boolean
 }
 
 input ProductVariantRelateToManyForUpdateInput {
@@ -887,6 +947,7 @@ input ProductCreateInput {
   sku: String
   series: String
   title: String
+  brand: BrandRelateToOneForCreateInput
   slug: String
   status: String
   date: DateTime
@@ -900,6 +961,11 @@ input ProductCreateInput {
   category: ProductCategoryRelateToOneForCreateInput
   SkinConcern: ProductSkinConcernRelateToOneForCreateInput
   SkinCareItemType: ProductSkinCareItemTypeRelateToOneForCreateInput
+}
+
+input BrandRelateToOneForCreateInput {
+  create: BrandCreateInput
+  connect: BrandWhereUniqueInput
 }
 
 input ProductVariantRelateToManyForCreateInput {
@@ -964,6 +1030,12 @@ type Mutation {
   updatePosts(data: [PostUpdateArgs!]!): [Post]
   deletePost(where: PostWhereUniqueInput!): Post
   deletePosts(where: [PostWhereUniqueInput!]!): [Post]
+  createBrand(data: BrandCreateInput!): Brand
+  createBrands(data: [BrandCreateInput!]!): [Brand]
+  updateBrand(where: BrandWhereUniqueInput!, data: BrandUpdateInput!): Brand
+  updateBrands(data: [BrandUpdateArgs!]!): [Brand]
+  deleteBrand(where: BrandWhereUniqueInput!): Brand
+  deleteBrands(where: [BrandWhereUniqueInput!]!): [Brand]
   createProductCategory(data: ProductCategoryCreateInput!): ProductCategory
   createProductCategories(
     data: [ProductCategoryCreateInput!]!
@@ -1109,6 +1181,14 @@ type Query {
   ): [Post!]
   post(where: PostWhereUniqueInput!): Post
   postsCount(where: PostWhereInput! = {}): Int
+  brands(
+    where: BrandWhereInput! = {}
+    orderBy: [BrandOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Brand!]
+  brand(where: BrandWhereUniqueInput!): Brand
+  brandsCount(where: BrandWhereInput! = {}): Int
   productCategories(
     where: ProductCategoryWhereInput! = {}
     orderBy: [ProductCategoryOrderByInput!]! = []

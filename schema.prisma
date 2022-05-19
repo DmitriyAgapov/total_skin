@@ -73,6 +73,20 @@ model Post {
   @@index([authorId])
 }
 
+model Brand {
+  id                 String    @id @default(cuid())
+  title              String    @default("")
+  logo_filesize      Int?
+  logo_extension     String?
+  logo_width         Int?
+  logo_height        Int?
+  logo_mode          String?
+  logo_id            String?
+  content            Json      @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  slug               String    @unique @default("")
+  from_Product_brand Product[] @relation("Product_brand")
+}
+
 model ProductCategory {
   id                    String    @id @default(cuid())
   title                 String    @default("")
@@ -135,6 +149,8 @@ model Product {
   sku                         String                   @default("")
   series                      String                   @default("")
   title                       String                   @default("")
+  brand                       Brand?                   @relation("Product_brand", fields: [brandId], references: [id])
+  brandId                     String?                  @map("brand")
   slug                        String                   @unique @default("")
   status                      String?                  @default("draft")
   date                        DateTime?
@@ -158,6 +174,7 @@ model Product {
   SkinCareItemTypeId          String?                  @map("SkinCareItemType")
   from_ProductVariant_product ProductVariant[]         @relation("ProductVariant_product")
 
+  @@index([brandId])
   @@index([categoryId])
   @@index([SkinConcernId])
   @@index([SkinCareItemTypeId])

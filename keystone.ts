@@ -52,6 +52,7 @@ export default withAuth(
         experimental: {
             generateNextGraphqlAPI: true,
             generateNodeAPI: true,
+
         },
 
         // ui: {

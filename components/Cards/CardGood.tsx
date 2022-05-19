@@ -4,6 +4,8 @@ import styled from "styled-components";
 import Image from "next/image";
 import Link from "next/link";
 import {FavIcon} from "../Icons";
+import { DocumentRenderer } from '@keystone-6/document-renderer';
+import CustomLink from "../Link";
 
 const CardGoodStyled = styled.div`
       //background-color: rgba(236, 239, 248, 1);
@@ -106,22 +108,18 @@ const CardGood = (props) => {
     return (
         <CardGoodStyled>
             <div className={'product-image'}>
-                <Image objectFit={"contain"} src={props.props.image} width={480} height={320}/>
+                <Image objectFit={"contain"} src={props.props.image.url} width={480} height={320}/>
             </div>
-            {props.props.brand ? <div className={'product__uptitle'}>{props.props.brand}</div> : null}
+            {props.props.brand ? <div className={'product__uptitle'}>{props.props.brand.title}</div> : null}
             {props.props.title ? <h2>{props.props.title.toLowerCase()}</h2> : null}
-            {props.props.shortDesc ? <div className={'product__description'}>{props.props.shortDesc}</div> : null}
+            {props.props.shortDesc ? <div className={'product__description'}>
+                <DocumentRenderer document={props.props.shortDesc.document} /></div> : null}
             <a href={'#'} className={'product-fav'}>
                 <FavIcon />
             </a>
             <div className={'product__actions'}>
-
-                <Link href={'/shop/product'}>
-                    <a className={'button button-primary'}>More</a>
-                </Link>
-                <Link href={'/shop/product'}>
-                    <a className={'button button-secondary'}>Add to card</a>
-                </Link>
+                <CustomLink href={'/shop/product'} type={'primary'} text={'More'} />
+                <CustomLink href={'/shop/product'} type={'secondary'} text={'Add to card'} />
             </div>
         </CardGoodStyled>
     )

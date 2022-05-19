@@ -92,9 +92,9 @@ const UserBar = () =>
 		<form className={'search'}><input type={"search"} placeholder={'Search'} onSubmit={(event => console.log('search'))} /><Button type={"submit"} ><SearchIcon /></Button></form>
 			<Link href={'#'}><LinkStyled className={'button button-primary'}>Sign up</LinkStyled></Link>
 			<div className={'icons_bar'}>
-				<Link href={'#'}><LinkStyled><UserIcon /></LinkStyled></Link>
+				<Link href={'/accaunt'}><LinkStyled><UserIcon /></LinkStyled></Link>
 				<Link href={'#'}><LinkStyled><FavIcon /></LinkStyled></Link>
-				<Link href={'#'}><LinkStyled><CartIcon /></LinkStyled></Link>
+				<Link href={'/shop/cart'}><LinkStyled><CartIcon /></LinkStyled></Link>
 			</div>
 			<Hamburger />
 	</UserBarStyled>

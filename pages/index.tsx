@@ -1,7 +1,5 @@
-import {InferGetServerSidePropsType, InferGetStaticPropsType} from 'next';
+
 import React, {useEffect, useRef, useState} from 'react';
-import {query} from '.keystone/api';
-import {Lists} from '.keystone/types';
 
 import Section from '../components/Section/Section';
 import Block from "../components/Block/Block";
@@ -23,7 +21,7 @@ import method1 from '../assets/images/images/method1.jpg'
 import method2 from '../assets/images/images/method2.jpg'
 import Gallery from "../components/Gallery";
 import GalleryCentered from "../components/GalleryCentered";
-import {useIntersection} from "../utils";
+
 
 type Post = {
     id: string;

@@ -222,7 +222,33 @@ export const lists = {
 			}),
 		},
 	}),
-
+	Brand: list({
+		fields: {
+			title: text(),
+			logo: image(),
+			content: document({
+				formatting: true,
+				dividers: true,
+				links: true,
+				layouts: [
+					[1, 1],
+					[1, 1, 1],
+				],
+			}),
+			slug: text({
+				ui: { createView: { fieldMode: 'hidden' } },
+				isIndexed: 'unique',
+				hooks: {
+					resolveInput: ({ operation, resolvedData, inputData, context }) => {
+						if (operation === 'create' && !inputData.slug) {
+							return defaultSlug({ context, inputData });
+						}
+						return resolvedData.slug;
+					}
+				}
+			}),
+		}
+	}),
 	ProductCategory: list({
 		fields: {
 			title: text({
@@ -353,6 +379,9 @@ export const lists = {
 			series: text(),
 			title: text({
 
+			}),
+			brand: relationship({
+				ref: 'Brand'
 			}),
 			slug: text({
 				ui: { createView: { fieldMode: 'hidden' } },

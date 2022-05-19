@@ -44,7 +44,7 @@ function order(field: string) {
 
 
 // export default function HomePage({posts, sections, galItems}: InferGetServerSidePropsType<typeof getServerSideProps>) {
-export default function ContactsPage() {
+export default function ConsultationPage() {
 
 	const img = [
 		nophoto, nophoto1
@@ -54,7 +54,7 @@ export default function ContactsPage() {
 	]
 	return (<>
 			<Section variant={"section-page section-page__contacts"}>
-				<Block title={'Contacts'}
+				<Block title={'Online consultation'}
 					   description={<dl><dt>Open</dt>
 						   <dd>Monday - Saturday 10am - 7pm</dd>
 						   <dt>Phone</dt>

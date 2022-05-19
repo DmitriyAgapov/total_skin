@@ -1,77 +1,95 @@
-import {InferGetServerSidePropsType, InferGetStaticPropsType} from 'next';
+import  ProductStore  from '../../stores/products';
 import React, {useEffect, useState} from 'react';
+// eslint-disable-next-line import/no-unresolved
 import {query} from '.keystone/api';
-import {Lists} from '.keystone/types';
+// import {Lists} from '.keystone/types';
 import Section from '../../components/Section/Section';
 import Block from "../../components/Block/Block";
-import photo from '../../assets/images/images/cards/1.png'
-import photo2 from '../../assets/images/images/cards/2.png'
-import photo3 from '../../assets/images/images/cards/3.png'
-import CardGood from "../../components/Cards/CardGood";
-import data from './../../data';
+// import photo from '../../assets/images/images/cards/1.png'
+// import photo2 from '../../assets/images/images/cards/2.png'
+// import photo3 from '../../assets/images/images/cards/3.png'
+// import CardGood from "../../components/Cards/CardGood";
+import Selects from "../../components/SelectProduct";
+import fetchGraphQL from "../../lib/fetchGraphql";
+import SelectedProducts from "../../components/SelectedProducts";
 
-type Post = {
-	id: string;
-	title: string;
-	slug: string;
-};
-
-type Section = {
-	id: string;
-	subtitle: string;
-	title: string;
-	type: string;
-	style: object;
-	url: string;
-	image: object;
-	variant: string
-	items: [];
-	background?: object;
-	video?: object;
-	content?: object;
-	pricing?: any;
-	collapsable: any;
-	page?: object;
-	contacts?: any;
-};
 
 function order(field: string) {
-	return (a: { [x: string]: number; }, b: { [x: string]: number; }) => a[field] > b[field] ? 1 : -1;
+    return (a: { [x: string]: number; }, b: { [x: string]: number; }) => a[field] > b[field] ? 1 : -1;
 }
+
 // Hook
 
 // export default function HomePage({posts, sections, galItems}: InferGetServerSidePropsType<typeof getServerSideProps>) {
-export default function AboutPage() {
+export default function ShopPage({filters}) {
 
-	const cards = [ {
+    return (
+        <Section variant={"section-page"}>
+            <Block title={'Shop'}>
+                <div className={'block__select'}>
+                    <Selects filterdata={filters}/></div>
+               <SelectedProducts />
+            </Block>
+        </Section>
 
-	},
-		photo, photo2, photo3
-	]
-
-
-	return (
-			<Section variant={"section-page"}>
-				<Block title={'Shop'}>
-					<div className={'block__items grid'}>
-						{data.Valmont.map(item => <CardGood key={item.SKU} props={item} />)}
-
-					</div>
-				</Block>
-			</Section>
-
-	);
+    );
 }
 
 
 export async function getStaticProps() {
-	let page = {
-		type: 'about',
-	}
+    const products = await query.Product.findMany({
+        query: 'id slug brand { title } sku series title category { title } image { width height url } shortDesc { document } SkinConcern { title } SkinCareItemType { title } productVariant { id title value price } description { document } benefit { document } ingridient { document } application { document }',
+        where:  {
+            brand: {
+                title: {
+                    contains: ProductStore.filters[0].brand
+                }
+            },
+            category: {
+                title: {
+                    contains: ProductStore.filters[1].category
+                }
+            },
+            SkinConcern: {
+                title: {
+                    contains: ProductStore.filters[2].skinConcern
+                }
+            },
+            SkinCareItemType: {
+                title: {
+                    contains: ProductStore.filters[3].skinCareItemType
+                }
+            },
+        }
 
-	return {
-		props: {
-			page
-		}
-	};
+    });
+    const brands = await query.Brand.findMany({
+        query: 'id slug title',
+    });
+    const category = await query.ProductCategory.findMany({
+        query: 'id slug title',
+    });
+    const skinConcern = await query.ProductSkinConcern.findMany({
+        query: 'id slug title',
+    });
+    const skinCareItemType = await query.ProductSkinCareItemType.findMany({
+        query: 'id slug title',
+    });
+    const filters = {
+        brands: brands,
+        category: category,
+        skinConcern: skinConcern,
+        skinCareItemType: skinCareItemType
+    }
+    let page = {
+        type: 'about',
+    }
+
+    return {
+        props: {
+            filters,
+            products,
+            page
+        }
+    };
 }
