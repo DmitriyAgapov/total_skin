@@ -1,11 +1,13 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect } from "react";
 import Footer from './Footer'
 import Head from "next/head";
 import Header from "./Header";
 import styled from "styled-components";
-import {inject, observer} from "mobx-react";
-import {useWindowSize} from "../utils";
-import MenuStore from "../stores/options";
+import { observer } from "mobx-react-lite";
+import OnlineConsultationFloatButton from "./OnlineConsultationFloatButton";
+import { useStore } from "./StoreProvider";
+import DrawerCustom from "./DrawerCustom";
+import { Backdrop, Button } from "@mui/material";
 
 
 const Main = styled.main`
@@ -45,11 +47,20 @@ const Main = styled.main`
 		background-repeat: repeat-x;
 	}
 `;
+const Layout = observer(function Layout({ props, children }) {
+	const store = useStore()
+	useEffect(() => {
+		store.menuStore.setWidth(window.innerWidth)
+		// stop the clock when the component unmounts
 
-const Layout  = observer(({children}) => {
-	MenuStore.Width.setWidth(useWindowSize().windowSize.width)
+	}, [store.menuStore.width])
+
+	const handleClose = () => {
+		store.menuStore.setCloseDrawer()
+	};
+
 	let stripe = [];
-	for(let i = 0; i < 100; i++) {
+	for (let i = 0; i < 100; i++) {
 		stripe.push(
 			<div className={'bg_row'}></div>)
 	}
@@ -59,13 +70,15 @@ const Layout  = observer(({children}) => {
 		<>
 			<Head>
 				<title>page</title>
-				<meta name="viewport" content="width=device-width, initial-scale=1"/>
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
 			</Head>
-
-			<Header/>
-				<Main><div className={'bgsvg'}>{stripe}</div> {children}</Main>
-
-			<Footer/>
+			<Header />
+			<Main>
+				<Backdrop sx={{ color: '#fff', zIndex: 50 }} open={store.menuStore.openDrawer} onClick={handleClose} />
+				<DrawerCustom />
+				<div className={'bgsvg'}>{stripe}</div> {children}</Main>
+			<OnlineConsultationFloatButton />
+			<Footer />
 		</>
 	)
 })

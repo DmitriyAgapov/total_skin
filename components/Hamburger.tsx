@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import React from "react";
 import { observer, inject} from "mobx-react";
-
+import MenuStore from "../stores/options";
+import {useStore} from "./StoreProvider";
 
 const HamburgerStyled = styled.div`
   font-size: 0.5em;
@@ -64,13 +65,13 @@ const HamburgerStyled = styled.div`
   }
   
 `
-
-const Hamburger = inject('MenuStore')(observer(({MenuStore}) => {
+const Hamburger = observer(function Hamburger(props) {
+	const store = useStore()
 
 		 return (
 			<div style={{alignSelf: "center"}}>
-				<a    onClick={() => { MenuStore.Open.toggleState() }}>
-				<HamburgerStyled className={MenuStore.Open.state ? 'is-active' : ''}>
+				<a    onClick={() => { store.menuStore.toggleState() }}>
+				<HamburgerStyled className={store.menuStore.open ? 'is-active' : ''}>
 					<span className={'line'}/>
 					<span className={'line'}/>
 					<span className={'line'}/>
@@ -79,6 +80,6 @@ const Hamburger = inject('MenuStore')(observer(({MenuStore}) => {
 			</div>
 		);
 
-}));
+});
 
 export default Hamburger

@@ -46,7 +46,9 @@ export const useIntersection = (element:any, rootMargin: string) => {
 
     return isVisible;
 };
-
+export function checkAvailability(arr: any[], val: string) {
+    return arr.some((arrVal: any) => val === arrVal.id);
+}
 export const useWindowScrollPositions = () => {
     const [scrollPosition, setPosition] = useState({ scrollX: 0, scrollY: 0 })
 

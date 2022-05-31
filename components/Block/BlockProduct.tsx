@@ -1,11 +1,17 @@
-import React from "react";
+import React, {useCallback, useEffect, useState} from "react";
 // @ts-ignore
 import styled from "styled-components";
 import {gridColumns, gridGap} from "../vars";
-import Link from "next/link";
+
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import BasicTabs from "../Tab";
+
+import {observer} from "mobx-react-lite";
+import {useStore} from "../StoreProvider";
+import {DocumentRenderer} from "@keystone-6/document-renderer";
+import {toJS} from "mobx";
+import {Item} from "../../stores/cart";
+import AddToCartButton from "../AddToCartButton";
 
 export const BlockProductStyled = styled.div`
   //grid-column: 2/-2;
@@ -27,30 +33,43 @@ export const BlockProductStyled = styled.div`
     color: #9E9FA3;
     font-size: 1.25rem;
   }
+
   .product__description {
     margin: 0 0 2.5rem 0;
     font-size: 1.25rem;
-   
+
   }
+
   .product__specs, .product__variants {
     margin: 0 0 2.5rem 0;
-    font-size: 1.25rem;   
+    font-size: 1.25rem;
   }
+
   .product__specs-item {
     display: grid;
     align-items: end;
-    grid-template-columns: 15rem 6rem;
+    grid-template-columns: 15rem auto;
     line-height: 1.25;
     margin-bottom: .125rem;
   }
+
   .product__specs-item-label {
     font-size: 1rem;
     color: rgba(158, 159, 163, 1);
   }
+
   z-index: 20;
   position: relative;
+
+  .product__actions {
+    .button {
+      box-shadow: none;
+    }
+  }
+
   .product__variants_group {
     gap: 1.75rem;
+
     .button {
       background-color: transparent;
       min-width: 5rem;
@@ -60,67 +79,79 @@ export const BlockProductStyled = styled.div`
   }
 `;
 
-export const BlockProduct = ({children = null, title = null, description = null, gallery = null, props}) => {
-    // console.log(gallery)
-    const [alignment, setAlignment] = React.useState<string | null>('left');
+// @ts-ignore
+export const BlockProduct = observer(function BlockProduct({props, children}) {
+	const store = useStore()
+	console.log(props.price)
+	const handleAlignment = (
+		event: React.MouseEvent<HTMLElement>,
+		newAlignment: string | null,
+	) => {
+		setAlignment(newAlignment);
+	};
+	const [alignment, setAlignment] = React.useState<string | null>(null);
 
-    const handleAlignment = (
-        event: React.MouseEvent<HTMLElement>,
-        newAlignment: string | null,
-    ) => {
-        setAlignment(newAlignment);
-    };
+	useEffect(() => {
+		if (props.productVariant.length > 0) {
+			console.log('more')
+			setAlignment(props.productVariant[0].value)
+		}
+	}, [])
 
-    return (
-        <BlockProductStyled>
-            {title ? <h1>{props.title.toLowerCase()}</h1> : null}
-            {props.shortDesc ? <div className={'product__subtitle'}>{props.shortDesc}</div> : null}
-            {props.description ? <div className={'product__description'}>{props.description}</div> : null}
-            <div className={'product__specs'}>
-                {props.brand ? <div className={'product__specs-item'}>
-                    <span className={'product__specs-item-label'}>Brand:</span>
-                    <a className={'product__specs-item-value'}>{props.brand}</a>
-                </div>: null}
-                {props.category ? <div className={'product__specs-item'}>
-                    <span className={'product__specs-item-label'}>Category:</span>
-                    <a className={'product__specs-item-value'}>{props.category}</a>
-                </div>: null}
-                {props.series ? <div className={'product__specs-item'}>
-                    <span className={'product__specs-item-label'}>Series:</span>
-                    <a className={'product__specs-item-value'}>{props.series}</a>
-                </div>: null}
-                {props.SkinConcern ? <div className={'product__specs-item'}>
-                    <span className={'product__specs-item-label'}>Skin Concern:</span>
-                    <a className={'product__specs-item-value'}>{props.SkinConcern}</a>
-                </div>: null}
+	const handleChange = useCallback((item: Item) => {
+		store.cartStore.addItem(item)
+	}, []);
 
-            </div>
-            <div className={'product__variants'}>
-                <ToggleButtonGroup
-                    value={alignment}
-                    exclusive
-                    onChange={handleAlignment}
-                    aria-label="text alignment"
-                    className={'product__variants_group'}
-                >
-                    <ToggleButton  className={'button button-outline'} value="75" aria-label="75 ml">
-                        75 ml
-                    </ToggleButton>
-                    <ToggleButton className={'button button-outline'} value="60" aria-label="60 ml">
-                       60 ml
-                    </ToggleButton>
+	return (
+		<BlockProductStyled>
+			{props.title ? <h1>{props.title.toLowerCase()}</h1> : null}
+			{props.shortDesc ?
+				<div className={'product__subtitle'}><DocumentRenderer document={props.shortDesc.document}/>
+				</div> : null}
+			{props == undefined ?
+				<div className={'product__description'}><DocumentRenderer document={props.description.document}/>
+				</div> : null}
+			<div className={'product__specs'}>
+				{props.brand.title ? <div className={'product__specs-item'}>
+					<span className={'product__specs-item-label'}>Brand:</span>
+					<a className={'product__specs-item-value'}>{props.brand.title}</a>
+				</div> : null}
+				{props.category ? <div className={'product__specs-item'}>
+					<span className={'product__specs-item-label'}>Category:</span>
+					<a className={'product__specs-item-value'}>{props.category.title}</a>
+				</div> : null}
+				{props.series ? <div className={'product__specs-item'}>
+					<span className={'product__specs-item-label'}>Series:</span>
+					<a className={'product__specs-item-value'}>{props.series}</a>
+				</div> : null}
+				{props.SkinConcern ? <div className={'product__specs-item'}>
+					<span className={'product__specs-item-label'}>Skin Concern:</span>
+					<a className={'product__specs-item-value'}>{props.SkinConcern.title}</a>
+				</div> : null}
+			</div>
+			{props.price ? <div className={'product__variants'}>{props.price}</div> : null}
+			{props.productVariant.length > 0 ?
+				<div className={'product__variants'}>
+					<ToggleButtonGroup
+						value={alignment}
+						exclusive
+						onChange={handleAlignment}
+						aria-label="text alignment"
+						className={'product__variants_group'}
+					>
+						{props.productVariant.length > 0 ? props.productVariant.map((item: { id: React.Key | null | undefined; value: unknown; title: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; }, i: any) =>
+							<ToggleButton key={item.id} className={'button button-outline'}
+							              value={item.value} aria-label={item.value}>
+								{item.title}
+							</ToggleButton>
+						) : null}
+					</ToggleButtonGroup>
+				</div> : null}
+			<div className={'product__actions'}>
+				<AddToCartButton props={props} classes={'button-lg'}/>
+			</div>
+			{children ? <div className={'content'}>{children}</div> : null}
 
-                </ToggleButtonGroup>
-            </div>
-            <div className={'product__actions'}>
-                <Link href={'/shop/product'}>
-                    <a className={'button button-primary button-lg'}>Add to cart</a>
-                </Link>
-            </div>
-
-
-            {children ? <div className={'content'}>{children}</div> : null}
-
-        </BlockProductStyled>
-    )
-}
+		</BlockProductStyled>
+	)
+})

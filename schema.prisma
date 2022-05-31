@@ -20,19 +20,20 @@ model Role {
 }
 
 model User {
-  id               String  @id @default(cuid())
-  name             String  @default("")
-  email            String  @unique @default("")
-  password         String
-  role             Role?   @relation("User_role", fields: [roleId], references: [id])
-  roleId           String? @map("role")
-  address          String  @default("")
-  phone            String  @default("")
-  instagram        String  @default("")
-  facebook         String  @default("")
-  linkedin         String  @default("")
-  emailContacts    String  @default("")
-  from_Post_author Post[]  @relation("Post_author")
+  id                  String  @id @default(cuid())
+  name                String  @default("")
+  email               String  @unique @default("")
+  password            String
+  role                Role?   @relation("User_role", fields: [roleId], references: [id])
+  roleId              String? @map("role")
+  address             String  @default("")
+  phone               String  @default("")
+  instagram           String  @default("")
+  facebook            String  @default("")
+  linkedin            String  @default("")
+  emailContacts       String  @default("")
+  from_Order_customer Order[] @relation("Order_customer")
+  from_Post_author    Post[]  @relation("Post_author")
 
   @@index([roleId])
 }
@@ -46,6 +47,30 @@ model Callback {
   message       String    @default("")
 }
 
+model OrderItem {
+  id                  String   @id @default(cuid())
+  ref                 Product? @relation("OrderItem_ref", fields: [refId], references: [id])
+  refId               String?  @map("ref")
+  count               Int?
+  totalPrice          Int?
+  from_Order_products Order[]  @relation("Order_products")
+
+  @@index([refId])
+}
+
+model Order {
+  id         String      @id @default(cuid())
+  number     Int?
+  products   OrderItem[] @relation("Order_products")
+  customer   User?       @relation("Order_customer", fields: [customerId], references: [id])
+  customerId String?     @map("customer")
+  comments   Json        @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  status     String?     @default("published")
+  date       DateTime?
+
+  @@index([customerId])
+}
+
 model Tag {
   id            String @id @default(cuid())
   title         String @default("")
@@ -57,7 +82,7 @@ model Post {
   order           Int?
   title           String    @default("")
   slug            String    @unique @default("")
-  status          String?   @default("draft")
+  status          String?   @default("published")
   date            DateTime?
   image_filesize  Int?
   image_extension String?
@@ -75,7 +100,7 @@ model Post {
 
 model Brand {
   id                 String    @id @default(cuid())
-  title              String    @default("")
+  title              String    @unique @default("")
   logo_filesize      Int?
   logo_extension     String?
   logo_width         Int?
@@ -89,9 +114,9 @@ model Brand {
 
 model ProductCategory {
   id                    String    @id @default(cuid())
-  title                 String    @default("")
+  title                 String    @unique @default("")
   slug                  String    @unique @default("")
-  status                String?   @default("draft")
+  status                String?   @default("published")
   image_filesize        Int?
   image_extension       String?
   image_width           Int?
@@ -104,9 +129,9 @@ model ProductCategory {
 
 model ProductSkinConcern {
   id                       String    @id @default(cuid())
-  title                    String    @default("")
+  title                    String    @unique @default("")
   slug                     String    @unique @default("")
-  status                   String?   @default("draft")
+  status                   String?   @default("published")
   image_filesize           Int?
   image_extension          String?
   image_width              Int?
@@ -119,9 +144,9 @@ model ProductSkinConcern {
 
 model ProductSkinCareItemType {
   id                            String    @id @default(cuid())
-  title                         String    @default("")
+  title                         String    @unique @default("")
   slug                          String    @unique @default("")
-  status                        String?   @default("draft")
+  status                        String?   @default("published")
   image_filesize                Int?
   image_extension               String?
   image_width                   Int?
@@ -152,8 +177,9 @@ model Product {
   brand                       Brand?                   @relation("Product_brand", fields: [brandId], references: [id])
   brandId                     String?                  @map("brand")
   slug                        String                   @unique @default("")
-  status                      String?                  @default("draft")
+  status                      String?                  @default("published")
   date                        DateTime?
+  price                       Int?                     @default(0)
   image_filesize              Int?
   image_extension             String?
   image_width                 Int?
@@ -172,6 +198,7 @@ model Product {
   SkinConcernId               String?                  @map("SkinConcern")
   SkinCareItemType            ProductSkinCareItemType? @relation("Product_SkinCareItemType", fields: [SkinCareItemTypeId], references: [id])
   SkinCareItemTypeId          String?                  @map("SkinCareItemType")
+  from_OrderItem_ref          OrderItem[]              @relation("OrderItem_ref")
   from_ProductVariant_product ProductVariant[]         @relation("ProductVariant_product")
 
   @@index([brandId])

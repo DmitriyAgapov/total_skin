@@ -27,7 +27,7 @@ const HeaderStyled = styled.header`
 	
   gap: 0 ${gridGap};
   //grid-template-columns: calc((100vw - 76rem) / 2) 1fr calc((100vw - 76rem) / 2);
-  z-index: 100;
+  z-index: 150;
   &.header:not([class*="index"]) a {
     color: black;
   }

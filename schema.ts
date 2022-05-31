@@ -1,7 +1,7 @@
 // Code copied (with some modifications) from the Keystone 6 "with-auth" example
 // See.. https://github.com/keystonejs/keystone/tree/master/examples/with-auth
 import {permissions, rules} from './schema/access';
-import {list} from '@keystone-6/core';
+import {list, graphql} from '@keystone-6/core';
 import {document} from '@keystone-6/fields-document';
 import {
 	checkbox,
@@ -16,6 +16,7 @@ import {
 	integer
 } from '@keystone-6/core/fields';
 import {defaultSlug, defaultTimestamp} from "./schema/content";
+
 
 const fieldModes = {
 	editSelfOrRead: ({session, item}: any) =>
@@ -162,6 +163,96 @@ export const lists = {
 			message: text(),
 		}
 	}),
+	OrderItem: list({
+
+		fields: {
+			ref: relationship({
+				ref: 'Product',
+				many: false,
+
+			}),
+			count: integer(),
+			// price: virtual({
+			//
+			// }),
+			totalPrice: integer({
+				hooks: {
+					resolveInput: async ({ item, inputData, operation, resolvedData, context }) => {
+
+						if (operation === 'create' && inputData.count) {
+							const { connect: {id}} = resolvedData.ref
+							let price = await context.query.Product.findOne({
+								where: { id: id },
+								query: 'productVariant { price }',
+							})
+
+							return inputData.count * price.productVariant[0].price;
+						} if (operation === 'update') {
+							const id = item.refId
+							let price = await context.query.Product.findOne({
+								where: { id: id },
+								query: 'productVariant { price }',
+							})
+							return price.productVariant[0].price * resolvedData.count
+
+						}
+						// return resolvedData.count;
+					}
+				}
+			}),
+
+		},
+
+	}),
+
+	Order: list({
+		fields: {
+			number: integer({
+				hooks: {
+					resolveInput: async ({ item, context, inputData, operation, resolvedData }) => {
+						if (operation === 'create') {
+							let count = await context.query.Order.count({})
+							return count+1;
+						}
+					}
+				}
+			}),
+			products: relationship({
+				ref: 'OrderItem',
+				many: true,
+				ui: {
+					displayMode: "cards",
+					cardFields: [ 'ref', 'count', 'totalPrice'],
+					inlineCreate: { fields: ['ref', 'count', 'totalPrice'] },
+					inlineEdit: { fields: ['ref', 'count', 'totalPrice'] },
+				}
+			}),
+			customer: relationship({
+				ref: 'User'
+			}),
+			comments: document({}),
+			status: select({
+				options: [
+					{ label: 'Draft', value: 'draft' },
+					{ label: 'Published', value: 'published' },
+					{ label: 'Archived', value: 'archived' },
+				],
+				defaultValue: 'published',
+				ui: { displayMode: 'segmented-control' },
+			}),
+			date: timestamp({
+				hooks: {
+					resolveInput: ({ inputData, operation, resolvedData }) => {
+						if (operation === 'create' && !inputData.slug) {
+							return defaultTimestamp();
+						}
+						return resolvedData.slug;
+					}
+				}
+			}),
+
+		}
+	}),
 	Tag: list({
 		fields: {
 			title: text(),
@@ -189,7 +280,7 @@ export const lists = {
 					{ label: 'Published', value: 'published' },
 					{ label: 'Archived', value: 'archived' },
 				],
-				defaultValue: 'draft',
+				defaultValue: 'published',
 				ui: { displayMode: 'segmented-control' },
 			}),
 			date: timestamp({
@@ -224,7 +315,9 @@ export const lists = {
 	}),
 	Brand: list({
 		fields: {
-			title: text(),
+			title: text({
+				isIndexed: 'unique'
+			}),
 			logo: image(),
 			content: document({
 				formatting: true,
@@ -252,7 +345,7 @@ export const lists = {
 	ProductCategory: list({
 		fields: {
 			title: text({
-
+				isIndexed: 'unique'
 			}),
 			slug: text({
 				ui: { createView: { fieldMode: 'hidden' } },
@@ -272,7 +365,7 @@ export const lists = {
 					{ label: 'Published', value: 'published' },
 					{ label: 'Archived', value: 'archived' },
 				],
-				defaultValue: 'draft',
+				defaultValue: 'published',
 				ui: { displayMode: 'segmented-control' },
 			}),
 			image: image({}),
@@ -290,7 +383,7 @@ export const lists = {
 	ProductSkinConcern: list({
 		fields: {
 			title: text({
-
+				isIndexed: 'unique'
 			}),
 			slug: text({
 				ui: { createView: { fieldMode: 'hidden' } },
@@ -310,7 +403,7 @@ export const lists = {
 					{ label: 'Published', value: 'published' },
 					{ label: 'Archived', value: 'archived' },
 				],
-				defaultValue: 'draft',
+				defaultValue: 'published',
 				ui: { displayMode: 'segmented-control' },
 			}),
 			image: image({}),
@@ -328,7 +421,7 @@ export const lists = {
 	ProductSkinCareItemType: list({
 		fields: {
 			title: text({
-
+				isIndexed: 'unique'
 			}),
 			slug: text({
 				ui: { createView: { fieldMode: 'hidden' } },
@@ -348,7 +441,7 @@ export const lists = {
 					{ label: 'Published', value: 'published' },
 					{ label: 'Archived', value: 'archived' },
 				],
-				defaultValue: 'draft',
+				defaultValue: 'published',
 				ui: { displayMode: 'segmented-control' },
 			}),
 			image: image({}),
@@ -401,7 +494,7 @@ export const lists = {
 					{ label: 'Published', value: 'published' },
 					{ label: 'Archived', value: 'archived' },
 				],
-				defaultValue: 'draft',
+				defaultValue: 'published',
 				ui: { displayMode: 'segmented-control' },
 			}),
 			date: timestamp({
@@ -412,7 +505,18 @@ export const lists = {
 						}
 						return resolvedData.slug;
 					}
+				},
+				ui: {
+					createView: {
+						fieldMode: "hidden"
+					},
+					itemView: {
+						fieldMode: "hidden"
+					}
 				}
+			}),
+			price: integer({
+				defaultValue: 0
 			}),
 			image: image({}),
 			shortDesc: document({

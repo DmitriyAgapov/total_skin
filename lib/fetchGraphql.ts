@@ -17,7 +17,7 @@ const fetchGraphql = async <Q, V = void>(
 
     const json = response.json();
 
-
+    // console.log('json', json)
     const errorMessage = json.errors?.[0]?.message;
     if (errorMessage) {
         throw new Error(`Fontdue graphql request error: ${errorMessage}`);

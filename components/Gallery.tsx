@@ -150,7 +150,6 @@ position: relative;
   }
 `
 
-
 export function SlideNextButton() {
     const swiper = useSwiper();
     return (
@@ -188,8 +187,9 @@ const Gallery = ({images, imgtwo, articles}) => {
         for (let i = 0, c = articles.length; i < c; i++) {
             testGallery.push(
                 <SwiperSlide className={(!articles) ? 2 : 'article-slide'} key={i + 25}>
-                    <CardArticle title={'title'}
-                                 description={<p>If you’ve followed along with the leaks in recent <a>weeks</a>, none of the new
+                    <CardArticle
+                        title={'title'}
+                         description={<p>If you’ve followed along with the leaks in recent <a>weeks</a>, none of the new
                                      features will surprise you. It’s also not a huge surprise that Google is bringing some
                                      features from Inbox over to Gmail. What did surprise me while trying out the new service
                                      ahead of today’s launch, though, is that some features that didn’t get a lot of attention in

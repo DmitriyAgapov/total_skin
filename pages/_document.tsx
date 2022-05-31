@@ -19,9 +19,6 @@ export default class MyDocument extends Document {
 					{/*/>*/}
 					{/* Inject MUI styles first to match with the prepend: true configuration. */}
 
-					{
-						// @ts-ignore
-						this.props.emotionStyleTags}
 				</Head>
 				<body>
 				<Main />

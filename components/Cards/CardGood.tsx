@@ -2,10 +2,13 @@ import {gridColumns, gridGap} from "../vars";
 import React from "react";
 import styled from "styled-components";
 import Image from "next/image";
-import Link from "next/link";
 import {FavIcon} from "../Icons";
 import { DocumentRenderer } from '@keystone-6/document-renderer';
 import CustomLink from "../Link";
+import {toJS} from "mobx";
+import {observer} from "mobx-react-lite";
+import {useStore} from "../StoreProvider";
+import AddToCartButton from "../AddToCartButton";
 
 const CardGoodStyled = styled.div`
       //background-color: rgba(236, 239, 248, 1);
@@ -103,25 +106,31 @@ const CardGoodStyled = styled.div`
   }
     `;
 
-const CardGood = (props) => {
-
+const CardGood = observer(function CardGood(props) {
+    const store = useStore()
+   // @ts-ignore
+    const {title} = toJS(props.props)
+    const handleChange = (item:object) => {
+        // console.log(item)
+        store.cartStore.addItem(item)
+    };
     return (
         <CardGoodStyled>
             <div className={'product-image'}>
-                <Image objectFit={"contain"} src={props.props.image.url} width={480} height={320}/>
+                <Image objectFit={"contain"} src={props.props.image ? props.props.image.url: '/images/cards/1.png'} width={480} height={320}/>
             </div>
             {props.props.brand ? <div className={'product__uptitle'}>{props.props.brand.title}</div> : null}
-            {props.props.title ? <h2>{props.props.title.toLowerCase()}</h2> : null}
+            {title ? <h2>{title.toLowerCase()}</h2> : null}
             {props.props.shortDesc ? <div className={'product__description'}>
                 <DocumentRenderer document={props.props.shortDesc.document} /></div> : null}
             <a href={'#'} className={'product-fav'}>
                 <FavIcon />
             </a>
             <div className={'product__actions'}>
-                <CustomLink href={'/shop/product'} type={'primary'} text={'More'} />
-                <CustomLink href={'/shop/product'} type={'secondary'} text={'Add to card'} />
+                <CustomLink href={`/shop/${props.props.slug}`} type={'primary'} text={'More'} />
+                <AddToCartButton props={props.props} classes={'button-secondary'}/>
             </div>
         </CardGoodStyled>
     )
-}
+})
 export default CardGood

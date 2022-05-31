@@ -17,7 +17,7 @@ import "swiper/css/thumbs";
 const GalleryProductStyled = styled.div`
 
   grid-column: 1/6;
-
+  overflow: hidden;
   grid-row: 1/4;
   //max-width: 100vw;
 

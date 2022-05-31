@@ -13,24 +13,28 @@ export const BlockStyled = styled.div`
   grid-template-columns: ${gridColumns};
   gap: ${gridGap};
 
-  h2 {
+  .block__title {
     grid-column: ${((props: { title: any; }) => (typeof props?.title == "object") ? `span 4` : `span 4`)};
   }
-
-  .description {
+  
+  .block__description {
     grid-column: ${((props: { title: any; }) => (typeof props?.title == "object") ? `6/span 7` : `span 8`)};
     //font-size: 125%;
     padding: 1em 2em;
   }
 `;
 
-const Block = ({children = null, title = null, description = null, gallery = null}) => {
+const Block = ({children = null, title = '', type = null, description = null, gallery = null, subtitle = null}) => {
+
     return (
         <BlockStyled>
+            <div className={'block__title'}>
             {title ? <h2>{title}</h2> : null}
-            {description ? <div className={'description'}
+            {subtitle ? <span className={'block__subtitle'}>{subtitle}</span> : null}
+            </div>
+            {description ? <div className={'block__description'}
                                 data-type={typeof title}>{description}</div> : null}
-            {children ? <div className={'content'}>{children}</div> : null}
+            {children ? <div className={'block__content'}>{children}</div> : null}
 
         </BlockStyled>
     )

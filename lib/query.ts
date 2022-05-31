@@ -44,6 +44,7 @@ export const DB_QUERY = `query GetProductsWithFilters(
     }
     sku
     series
+    price
     title
     category {
       title

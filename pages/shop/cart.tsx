@@ -13,36 +13,37 @@ import OrderSummary from "../../components/OrderSummary";
 // export default function HomePage({posts, sections, galItems}: InferGetServerSidePropsType<typeof getServerSideProps>) {
 export default function CartPage({products}) {
 
-    return (<>
-            <Section variant={"section-page section-page__cart"}>
-                <Block title={'Cart'}
-                       description={<div className={'accaunt__msg'}>Do you have an account?<a> Login</a></div>}>
+	return (<>
+			<Section variant={"section-page section-page__cart"}>
+				<Block title={'Cart'}
+				       description={<div className={'accaunt__msg'}>Do you have an account?<a> Login</a></div>}>
 
-                </Block>
-                <div className={'content'}><BasicTabs order={products} details={<p>test2</p>} shipment={<p>test3</p>} payment={<p>test4</p>}/></div>
-                <OrderSummary/>
+				</Block>
+				<div className={'content'}>
+                    <BasicTabs order={products} details={<p>test2</p>} shipment={<p>test3</p>} payment={<p>test4</p>}/>
+                </div>
+				<OrderSummary/>
 
-
-            </Section>
-        </>
-    );
+			</Section>
+		</>
+	);
 }
 
 
 export async function getStaticProps() {
-    const products = await query.Product.findMany({
-        query: 'id slug brand { title } sku series title category { title } image { width height url } shortDesc { document } SkinConcern { title } SkinCareItemType { title } productVariant { id title value price } description { document } benefit { document } ingridient { document } application { document }',
+	const products = await query.Product.findMany({
+		query: 'id slug brand { title } sku series title category { title } image { width height url } shortDesc { document } SkinConcern { title } SkinCareItemType { title } productVariant { id title value price } description { document } benefit { document } ingridient { document } application { document }',
 
-    });
-    let page = {
-        type: 'about',
-    }
+	});
+	let page = {
+		type: 'about',
+	}
 
-    return {
-        props: {
+	return {
+		props: {
 
-            products,
-            page
-        }
-    };
+			products,
+			page
+		}
+	};
 }

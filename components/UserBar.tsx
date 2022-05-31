@@ -2,6 +2,9 @@ import styled from "styled-components";
 import {CartIcon, FavIcon, SearchIcon, UserIcon} from "./Icons";
 import Link from 'next/link'
 import Hamburger from "./Hamburger";
+import {CartCounter} from "./Cart";
+import {useStore} from "./StoreProvider";
+import {observer} from "mobx-react-lite";
 
 const Button = styled.button`
   position: absolute;
@@ -81,22 +84,44 @@ const UserBarStyled = styled.div`
   }
 `
 const LinkStyled = styled.a`
+	width: 1.5rem;
+	height: 1.5rem;
+	position: relative;
+	.cart__counter {
+		position: absolute;
+		top: -.5rem;
+		right: -1rem;
+		background-color: var(--color-primary-40);
+		width: 1.5rem;
+		height: 1.5rem;
+		font-size: .75em;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		line-height: 1;
+		border-radius: 50%;
+		color: white;
+	}
   &.button {
 	  min-width: 10rem;
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
   }
 
 `
-const UserBar = () =>
+const UserBar =  observer(function DrawerCustom({props, children}) {
+	const store = useStore()
+		return (
 	<UserBarStyled>
 		<form className={'search'}><input type={"search"} placeholder={'Search'} onSubmit={(event => console.log('search'))} /><Button type={"submit"} ><SearchIcon /></Button></form>
 			<Link href={'#'}><LinkStyled className={'button button-primary'}>Sign up</LinkStyled></Link>
 			<div className={'icons_bar'}>
-				<Link href={'/accaunt'}><LinkStyled><UserIcon /></LinkStyled></Link>
+				<Link href={'/user'}><LinkStyled><UserIcon /></LinkStyled></Link>
 				<Link href={'#'}><LinkStyled><FavIcon /></LinkStyled></Link>
-				<Link href={'/shop/cart'}><LinkStyled><CartIcon /></LinkStyled></Link>
+				<a onClick={() => store.menuStore.toggleStateDrawer()}><LinkStyled><CartCounter /><CartIcon /></LinkStyled></a>
+
 			</div>
 			<Hamburger />
 	</UserBarStyled>
+		)})
 
 export default UserBar

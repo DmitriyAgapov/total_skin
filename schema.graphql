@@ -291,6 +291,196 @@ input CallbackCreateInput {
   message: String
 }
 
+type OrderItem {
+  id: ID!
+  ref: Product
+  count: Int
+  totalPrice: Int
+}
+
+input OrderItemWhereUniqueInput {
+  id: ID
+}
+
+input OrderItemWhereInput {
+  AND: [OrderItemWhereInput!]
+  OR: [OrderItemWhereInput!]
+  NOT: [OrderItemWhereInput!]
+  id: IDFilter
+  ref: ProductWhereInput
+  count: IntNullableFilter
+  totalPrice: IntNullableFilter
+}
+
+input IntNullableFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: IntNullableFilter
+}
+
+input OrderItemOrderByInput {
+  id: OrderDirection
+  count: OrderDirection
+  totalPrice: OrderDirection
+}
+
+input OrderItemUpdateInput {
+  ref: ProductRelateToOneForUpdateInput
+  count: Int
+  totalPrice: Int
+}
+
+input ProductRelateToOneForUpdateInput {
+  create: ProductCreateInput
+  connect: ProductWhereUniqueInput
+  disconnect: Boolean
+}
+
+input OrderItemUpdateArgs {
+  where: OrderItemWhereUniqueInput!
+  data: OrderItemUpdateInput!
+}
+
+input OrderItemCreateInput {
+  ref: ProductRelateToOneForCreateInput
+  count: Int
+  totalPrice: Int
+}
+
+input ProductRelateToOneForCreateInput {
+  create: ProductCreateInput
+  connect: ProductWhereUniqueInput
+}
+
+type Order {
+  id: ID!
+  number: Int
+  products(
+    where: OrderItemWhereInput! = {}
+    orderBy: [OrderItemOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [OrderItem!]
+  productsCount(where: OrderItemWhereInput! = {}): Int
+  customer: User
+  comments: Order_comments_Document
+  status: String
+  date: DateTime
+}
+
+type Order_comments_Document {
+  document(hydrateRelationships: Boolean! = false): JSON!
+}
+
+input OrderWhereUniqueInput {
+  id: ID
+}
+
+input OrderWhereInput {
+  AND: [OrderWhereInput!]
+  OR: [OrderWhereInput!]
+  NOT: [OrderWhereInput!]
+  id: IDFilter
+  number: IntNullableFilter
+  products: OrderItemManyRelationFilter
+  customer: UserWhereInput
+  status: StringNullableFilter
+  date: DateTimeNullableFilter
+}
+
+input OrderItemManyRelationFilter {
+  every: OrderItemWhereInput
+  some: OrderItemWhereInput
+  none: OrderItemWhereInput
+}
+
+input StringNullableFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  mode: QueryMode
+  not: NestedStringNullableFilter
+}
+
+input NestedStringNullableFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: NestedStringNullableFilter
+}
+
+input OrderOrderByInput {
+  id: OrderDirection
+  number: OrderDirection
+  status: OrderDirection
+  date: OrderDirection
+}
+
+input OrderUpdateInput {
+  number: Int
+  products: OrderItemRelateToManyForUpdateInput
+  customer: UserRelateToOneForUpdateInput
+  comments: JSON
+  status: String
+  date: DateTime
+}
+
+input OrderItemRelateToManyForUpdateInput {
+  disconnect: [OrderItemWhereUniqueInput!]
+  set: [OrderItemWhereUniqueInput!]
+  create: [OrderItemCreateInput!]
+  connect: [OrderItemWhereUniqueInput!]
+}
+
+input UserRelateToOneForUpdateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+  disconnect: Boolean
+}
+
+input OrderUpdateArgs {
+  where: OrderWhereUniqueInput!
+  data: OrderUpdateInput!
+}
+
+input OrderCreateInput {
+  number: Int
+  products: OrderItemRelateToManyForCreateInput
+  customer: UserRelateToOneForCreateInput
+  comments: JSON
+  status: String
+  date: DateTime
+}
+
+input OrderItemRelateToManyForCreateInput {
+  create: [OrderItemCreateInput!]
+  connect: [OrderItemWhereUniqueInput!]
+}
+
+input UserRelateToOneForCreateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+}
+
 type Tag {
   id: ID!
   title: String
@@ -385,46 +575,6 @@ input PostWhereInput {
   author: UserWhereInput
 }
 
-input IntNullableFilter {
-  equals: Int
-  in: [Int!]
-  notIn: [Int!]
-  lt: Int
-  lte: Int
-  gt: Int
-  gte: Int
-  not: IntNullableFilter
-}
-
-input StringNullableFilter {
-  equals: String
-  in: [String!]
-  notIn: [String!]
-  lt: String
-  lte: String
-  gt: String
-  gte: String
-  contains: String
-  startsWith: String
-  endsWith: String
-  mode: QueryMode
-  not: NestedStringNullableFilter
-}
-
-input NestedStringNullableFilter {
-  equals: String
-  in: [String!]
-  notIn: [String!]
-  lt: String
-  lte: String
-  gt: String
-  gte: String
-  contains: String
-  startsWith: String
-  endsWith: String
-  not: NestedStringNullableFilter
-}
-
 input TagManyRelationFilter {
   every: TagWhereInput
   some: TagWhereInput
@@ -469,12 +619,6 @@ input TagRelateToManyForUpdateInput {
   connect: [TagWhereUniqueInput!]
 }
 
-input UserRelateToOneForUpdateInput {
-  create: UserCreateInput
-  connect: UserWhereUniqueInput
-  disconnect: Boolean
-}
-
 input PostUpdateArgs {
   where: PostWhereUniqueInput!
   data: PostUpdateInput!
@@ -497,11 +641,6 @@ input TagRelateToManyForCreateInput {
   connect: [TagWhereUniqueInput!]
 }
 
-input UserRelateToOneForCreateInput {
-  create: UserCreateInput
-  connect: UserWhereUniqueInput
-}
-
 type Brand {
   id: ID!
   title: String
@@ -516,6 +655,7 @@ type Brand_content_Document {
 
 input BrandWhereUniqueInput {
   id: ID
+  title: String
   slug: String
 }
 
@@ -568,6 +708,7 @@ type ProductCategory_content_Document {
 
 input ProductCategoryWhereUniqueInput {
   id: ID
+  title: String
   slug: String
 }
 
@@ -624,6 +765,7 @@ type ProductSkinConcern_content_Document {
 
 input ProductSkinConcernWhereUniqueInput {
   id: ID
+  title: String
   slug: String
 }
 
@@ -680,6 +822,7 @@ type ProductSkinCareItemType_content_Document {
 
 input ProductSkinCareItemTypeWhereUniqueInput {
   id: ID
+  title: String
   slug: String
 }
 
@@ -758,12 +901,6 @@ input ProductVariantUpdateInput {
   product: ProductRelateToOneForUpdateInput
 }
 
-input ProductRelateToOneForUpdateInput {
-  create: ProductCreateInput
-  connect: ProductWhereUniqueInput
-  disconnect: Boolean
-}
-
 input ProductVariantUpdateArgs {
   where: ProductVariantWhereUniqueInput!
   data: ProductVariantUpdateInput!
@@ -776,11 +913,6 @@ input ProductVariantCreateInput {
   product: ProductRelateToOneForCreateInput
 }
 
-input ProductRelateToOneForCreateInput {
-  create: ProductCreateInput
-  connect: ProductWhereUniqueInput
-}
-
 type Product {
   id: ID!
   sku: String
@@ -790,6 +922,7 @@ type Product {
   slug: String
   status: String
   date: DateTime
+  price: Int
   image: ImageFieldOutput
   shortDesc: Product_shortDesc_Document
   productVariant(
@@ -865,6 +998,7 @@ input ProductWhereInput {
   slug: StringFilter
   status: StringNullableFilter
   date: DateTimeNullableFilter
+  price: IntNullableFilter
   productVariant: ProductVariantManyRelationFilter
   category: ProductCategoryWhereInput
   SkinConcern: ProductSkinConcernWhereInput
@@ -885,6 +1019,7 @@ input ProductOrderByInput {
   slug: OrderDirection
   status: OrderDirection
   date: OrderDirection
+  price: OrderDirection
 }
 
 input ProductUpdateInput {
@@ -895,6 +1030,7 @@ input ProductUpdateInput {
   slug: String
   status: String
   date: DateTime
+  price: Int
   image: ImageFieldInput
   shortDesc: JSON
   productVariant: ProductVariantRelateToManyForUpdateInput
@@ -951,6 +1087,7 @@ input ProductCreateInput {
   slug: String
   status: String
   date: DateTime
+  price: Int
   image: ImageFieldInput
   shortDesc: JSON
   productVariant: ProductVariantRelateToManyForCreateInput
@@ -1018,6 +1155,21 @@ type Mutation {
   updateCallbacks(data: [CallbackUpdateArgs!]!): [Callback]
   deleteCallback(where: CallbackWhereUniqueInput!): Callback
   deleteCallbacks(where: [CallbackWhereUniqueInput!]!): [Callback]
+  createOrderItem(data: OrderItemCreateInput!): OrderItem
+  createOrderItems(data: [OrderItemCreateInput!]!): [OrderItem]
+  updateOrderItem(
+    where: OrderItemWhereUniqueInput!
+    data: OrderItemUpdateInput!
+  ): OrderItem
+  updateOrderItems(data: [OrderItemUpdateArgs!]!): [OrderItem]
+  deleteOrderItem(where: OrderItemWhereUniqueInput!): OrderItem
+  deleteOrderItems(where: [OrderItemWhereUniqueInput!]!): [OrderItem]
+  createOrder(data: OrderCreateInput!): Order
+  createOrders(data: [OrderCreateInput!]!): [Order]
+  updateOrder(where: OrderWhereUniqueInput!, data: OrderUpdateInput!): Order
+  updateOrders(data: [OrderUpdateArgs!]!): [Order]
+  deleteOrder(where: OrderWhereUniqueInput!): Order
+  deleteOrders(where: [OrderWhereUniqueInput!]!): [Order]
   createTag(data: TagCreateInput!): Tag
   createTags(data: [TagCreateInput!]!): [Tag]
   updateTag(where: TagWhereUniqueInput!, data: TagUpdateInput!): Tag
@@ -1165,6 +1317,22 @@ type Query {
   ): [Callback!]
   callback(where: CallbackWhereUniqueInput!): Callback
   callbacksCount(where: CallbackWhereInput! = {}): Int
+  orderItems(
+    where: OrderItemWhereInput! = {}
+    orderBy: [OrderItemOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [OrderItem!]
+  orderItem(where: OrderItemWhereUniqueInput!): OrderItem
+  orderItemsCount(where: OrderItemWhereInput! = {}): Int
+  orders(
+    where: OrderWhereInput! = {}
+    orderBy: [OrderOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Order!]
+  order(where: OrderWhereUniqueInput!): Order
+  ordersCount(where: OrderWhereInput! = {}): Int
   tags(
     where: TagWhereInput! = {}
     orderBy: [TagOrderByInput!]! = []

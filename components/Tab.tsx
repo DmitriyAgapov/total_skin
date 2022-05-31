@@ -11,6 +11,9 @@ import FormContactDetails from "./FormContactsDetails";
 import FormShipment from "./FormShipment";
 import FormShipmentDetails from "./FormShipment";
 import FormPayment from "./FormPayment";
+import {DocumentRenderer} from "@keystone-6/document-renderer";
+import {observer} from "mobx-react-lite";
+import {useStore} from "./StoreProvider";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -65,8 +68,9 @@ function a11yProps(index: number) {
         'aria-controls': `simple-tabpanel-${index}`,
     };
 }
-
-export function ProductTabs({description,benefit,application,ingridients}) {
+export const ProductTabs = observer(function ProductTabs({props, children})  {
+    const {description, benefit, application, ingridient} = props
+    const store = useStore()
     const [value, setValue] = useState(0);
 
     const handleChange = (event: SyntheticEvent, newValue: number) => {
@@ -80,35 +84,28 @@ export function ProductTabs({description,benefit,application,ingridients}) {
                     {description ?   <Tab label="Description" {...a11yProps(0)} /> : null}
                     {benefit ?  <Tab label="Benefit" {...a11yProps(1)} /> : null}
                     {application ? <Tab label="Application" {...a11yProps(2)} /> : null}
-                    {ingridients ?    <Tab label="Ingridients" {...a11yProps(3)} /> : null}
-
-
-
-
+                    {ingridient ?    <Tab label="Ingridients" {...a11yProps(3)} /> : null}
                 </Tabs>
             </div>
             {description ?      <TabPanel value={value} index={0}>
-                {description}
+                <DocumentRenderer document={description.document} />
             </TabPanel> : null}
             {benefit ?      <TabPanel value={value} index={1}>
-                {benefit}
+                <DocumentRenderer document={benefit.document} />
             </TabPanel>: null}
             {application ?    <TabPanel value={value} index={2}>
-                {application}
+                <DocumentRenderer document={application.document} />
             </TabPanel> : null}
-            {ingridients ?       <TabPanel value={value} index={3}>
-                {ingridients}
+            {ingridient ?       <TabPanel value={value} index={3}>
+                <DocumentRenderer document={ingridient.document} />
             </TabPanel> : null}
-
-
-
-
         </BasicTabsStyled>
     );
-}
+})
+
 export function BasicTabs({order,details,shipment,payment}) {
     const [value, setValue] = useState(0);
-    console.log(order)
+
     const handleChange = (event: SyntheticEvent, newValue: number) => {
         setValue(newValue);
     };

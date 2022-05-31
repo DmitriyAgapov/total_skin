@@ -1,16 +1,9 @@
-import { useRouter } from "next/router";
 import styled from "styled-components";
-import { useWindowSize} from "../utils";
-import {useState} from "react";
 import Link from "next/link";
-import {MenuIcon} from "@keystone-ui/icons";
-import IconButton from "@mui/material/IconButton";
 import * as React from "react";
-import theme from '../assets/theme';
-import Hamburger from "./Hamburger";
-import {inject} from "mobx-react";
 import MenuStore from "../stores/options";
-
+import {useStore} from "./StoreProvider";
+import {useEffect} from "react";
 
 const NavStyled = styled.nav`
   grid-column: span 2;
@@ -39,13 +32,14 @@ const NavStyled = styled.nav`
 `
 
 const Nav = () => {
+	const store = useStore()
 
-	return MenuStore.Width.value > 1024 ? (
+	return store.menuStore.width > 1024 ? (
 		<NavStyled>
 			<ul>
 				<li><Link href={'/shop'}><a>Shop</a></Link></li>
-				<li><Link href={'about'}><a>About</a></Link></li>
-				<li><Link href={'contacts'}><a>Contacts</a></Link></li>
+				<li><Link href={'/about'}><a>About</a></Link></li>
+				<li><Link href={'/contacts'}><a>Contacts</a></Link></li>
 			</ul>
 
 		</NavStyled>
