@@ -5,6 +5,7 @@ type SessionContext = {
       role: {
         canManageContent: boolean;
         canManageUsers: boolean;
+        canOrder: boolean;
       };
     };
     itemId: string;
@@ -23,6 +24,9 @@ export const permissions = {
   },
   canManageUsers: ({ session }: SessionContext) => {
     return !!session?.data.role?.canManageUsers;
+  },
+  canOrder: ({ session }: SessionContext) => {
+    return !!session?.data.role?.canOrder;
   },
 };
 

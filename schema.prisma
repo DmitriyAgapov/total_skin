@@ -16,6 +16,7 @@ model Role {
   name             String  @default("")
   canManageContent Boolean @default(false)
   canManageUsers   Boolean @default(false)
+  canOrder         Boolean @default(false)
   users            User[]  @relation("User_role")
 }
 

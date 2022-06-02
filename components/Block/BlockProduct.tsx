@@ -60,13 +60,17 @@ export const BlockProductStyled = styled.div`
 
   z-index: 20;
   position: relative;
-
+	.product__price {
+      font-size: 2rem;
+      font-weight: 500;
+	  margin-bottom: 2rem;
+	}
   .product__actions {
     .button {
       box-shadow: none;
     }
   }
-
+	
   .product__variants_group {
     gap: 1.75rem;
 
@@ -82,7 +86,6 @@ export const BlockProductStyled = styled.div`
 // @ts-ignore
 export const BlockProduct = observer(function BlockProduct({props, children}) {
 	const store = useStore()
-	console.log(props.price)
 	const handleAlignment = (
 		event: React.MouseEvent<HTMLElement>,
 		newAlignment: string | null,
@@ -129,7 +132,7 @@ export const BlockProduct = observer(function BlockProduct({props, children}) {
 					<a className={'product__specs-item-value'}>{props.SkinConcern.title}</a>
 				</div> : null}
 			</div>
-			{props.price ? <div className={'product__variants'}>{props.price}</div> : null}
+			{props.price ? <div className={'product__price'}>${props.price}</div> : null}
 			{props.productVariant.length > 0 ?
 				<div className={'product__variants'}>
 					<ToggleButtonGroup

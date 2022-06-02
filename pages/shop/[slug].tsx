@@ -38,16 +38,11 @@ const ProductPage = (props) => {
   )
 }
 
-
-    export async function getServerSideProps({params: {slug}}: GetServerSideProps) {
+export async function getServerSideProps({params: {slug}}: GetServerSideProps) {
         const product =  await query.Product.findMany({
             where: { slug:  { equals : slug as string }},
             query: 'id sku slug series title brand {   title   id   slug } price image {   url } shortDesc {   document } productVariant {   id   title   value   price } description {   document } benefit {   document } ingridient {   document } application {   document } category {   id   slug   title } SkinConcern {   id   title   slug } SkinCareItemType {   id   title   slug } productVariant {   price }  ',
         });
-        // const categories = await query.TruckCategory.findMany({
-        //     query: 'id url title imageSvg { url }  item (take:8){id sku title inStock url photoCloud {cloudImg { publicUrl } } category  { id title url} weightLoad wheelType kmuType { title } engineType { title power } photo { image {  url } altText } content { document} price}'
-        // })
-        // const title = await trucks[0].category.title
         return { props: { initialState: { product }}};
     }
 

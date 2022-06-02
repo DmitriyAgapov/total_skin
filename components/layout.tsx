@@ -8,6 +8,7 @@ import OnlineConsultationFloatButton from "./OnlineConsultationFloatButton";
 import { useStore } from "./StoreProvider";
 import DrawerCustom from "./DrawerCustom";
 import { Backdrop, Button } from "@mui/material";
+import BasicModal from "./Modals/Modal";
 
 
 const Main = styled.main`
@@ -38,8 +39,8 @@ const Main = styled.main`
 		top: 0;
 		right: 0;
 		left: 0;
-		transform: rotateZ(28deg) translateX(-100vw);
-		
+		transform: rotateZ(28deg)  translateX(-50vw);
+	  width: 200vw;
 		bottom: 0;
 		background-size: contain;
 		position: relative;
@@ -51,8 +52,6 @@ const Layout = observer(function Layout({ props, children }) {
 	const store = useStore()
 	useEffect(() => {
 		store.menuStore.setWidth(window.innerWidth)
-		// stop the clock when the component unmounts
-
 	}, [store.menuStore.width])
 
 	const handleClose = () => {
@@ -74,9 +73,12 @@ const Layout = observer(function Layout({ props, children }) {
 			</Head>
 			<Header />
 			<Main>
+				<BasicModal />
 				<Backdrop sx={{ color: '#fff', zIndex: 50 }} open={store.menuStore.openDrawer} onClick={handleClose} />
 				<DrawerCustom />
-				<div className={'bgsvg'}>{stripe}</div> {children}</Main>
+				<div className={'bgsvg'}>{stripe}</div>
+				{children}
+			</Main>
 			<OnlineConsultationFloatButton />
 			<Footer />
 		</>

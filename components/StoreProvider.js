@@ -1,5 +1,6 @@
 import React, { createContext, useContext } from 'react'
 import RootStore from '../stores/stores'
+import { useLocalStore } from 'mobx-react-lite';
 
 let store
 // @ts-ignore
@@ -16,6 +17,7 @@ export function useStore() {
 
 export function StoreProvider({ children, initialState: initialData }) {
     const store = initializeStore(initialData)
+    // const store = useLocalStore(initialData);
     return <StoreContext.Provider value={store}>{children}</StoreContext.Provider>
 }
 

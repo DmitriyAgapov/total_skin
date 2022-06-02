@@ -8,7 +8,6 @@ import { observer} from "mobx-react-lite";
 import SelectedProducts from "../../components/SelectedProducts";
 
 const PageProduct = observer(function ShopPage(props) {
-
     return (
         <Section variant={"section-shop section-page"}>
             <Block title={'Shop'}>
@@ -18,7 +17,6 @@ const PageProduct = observer(function ShopPage(props) {
                <SelectedProducts />
             </Block>
         </Section>
-
     );
 })
 

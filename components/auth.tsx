@@ -47,7 +47,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           authenticatedItem {
             ... on User {
               id
-              name
+              name    
+              role {
+                canOrder
+              }          
             }
           }
         }

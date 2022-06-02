@@ -95,6 +95,7 @@ const CardGoodOrderStyled = styled.div.attrs(props => ({
   .product__price {
     color: var(--color-primary);
     font-size: 1.5rem;
+    font-weight: 500;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -185,7 +186,7 @@ const CardGoodOrder = (props) => {
 				</FormControl>
 			</div> : null}
 			<div className={'product__price'}>
-				550$
+				${props.props.price}
 			</div>
 			<div className={'product__actions'}>
 				<RemoveToCartButton  id={props.props.id} classes={'button-remove'} text={<CloseIcon fontSize={"large"}/>}/>

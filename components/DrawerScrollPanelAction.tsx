@@ -20,22 +20,7 @@ import { useEffect } from 'react';
 import { useStore } from './StoreProvider';
 import CardGoodOrder from './Cards/CardGoodOrder';
 const DrawerBoxStyled = styled.div`
-  // .drawer__custom {
-  //   z-index: 120;
-  //   position: relative;
-  // }
-  // .drawer__custom-wrapper {
-  //   position: relative;
-  //   padding: 7rem 1rem 1rem;
-  //   flex: 1;
-  // }
-
-  // .drawer__custom-items {
-  //   flex: 1;
-  //   position: relative;
-  //   max-height: 69vh;
-  //   overflow: hidden;
-  // }
+  
   .drawer__custom-total {
     display: flex;
     max-width: 20rem;
@@ -69,7 +54,6 @@ const DrawerBoxStyled = styled.div`
       font-size: 1.5rem;
       font-weight: 700;
     }
-    //width: 100%;
   }
 `
 const CartItemsStyled = styled.div`
@@ -102,7 +86,7 @@ const DrawerScrollPanelAction = observer(function DrawerScrollPanelAction(props)
     (ref.current as HTMLDivElement).ownerDocument.body.scrollTop = 0;
     setMessages(store.cartStore.getAllItems);
   }, [value, setMessages]);
-  console.log('msg', messages);
+
 
   return (
     <Box sx={{ pt: 10, }} ref={ref}>
@@ -123,7 +107,7 @@ const DrawerScrollPanelAction = observer(function DrawerScrollPanelAction(props)
           <BottomNavigation className={'drawer__custom-actions'}>
             <div className={'drawer__custom-total'}>
               <span className="drawer__custom-total--title">Total</span>
-              <span className="drawer__custom-total--value">$500</span>
+              <span className="drawer__custom-total--value">${store.cartStore.cartItemTotalPrice}</span>
             </div>
             <CustomLink href={'/shop/cart'} type={'primary button-block'} className={''} text={'Checkout'} />
 

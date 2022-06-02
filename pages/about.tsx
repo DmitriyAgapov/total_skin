@@ -9,6 +9,7 @@ import nophoto1 from '../assets/images/images/nophoto.jpg'
 import method from '../assets/images/images/method.jpg'
 import method1 from '../assets/images/images/method1.jpg'
 import method2 from '../assets/images/images/method2.jpg'
+import {useAuth} from "../components/auth";
 
 type Post = {
 	id: string;
@@ -40,15 +41,8 @@ function order(field: string) {
 
 // export default function HomePage({posts, sections, galItems}: InferGetServerSidePropsType<typeof getServerSideProps>) {
 export default function AboutPage() {
-
-	const img = [
-		nophoto, nophoto1
-	]
-	const imgs = [
-		method, method1, method2
-	]
+	
 	return (<>
-
 			<Section variant={"section-page"}>
 				<Block title={'About'}
 				       description={<p>If you’ve followed along with the leaks in recent <a>weeks</a>, none of the new

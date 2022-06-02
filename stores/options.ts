@@ -1,5 +1,5 @@
 import {action, makeObservable, observable} from "mobx";
-import {useWindowSize} from "../utils";
+
 export default class MenuStore {
 	constructor() {
 		makeObservable(this)
@@ -12,16 +12,16 @@ export default class MenuStore {
 	@observable width: number = 0;
 
 	@action toggleState() {
-		console.log(this.open)
+
 		this.open = !this.open;
 	}
 	@action toggleStateDrawer() {
-		console.log(this.openDrawer)
+
 		this.openDrawer = !this.openDrawer;
 		this.backDrop = !this.backDrop 
 	}
 	@action toggleStateModal() {
-		console.log(this.openModal)
+
 		this.openModal = !this.openModal;
 	}
 

@@ -5,7 +5,6 @@ import Hamburger from "./Hamburger";
 import {CartCounter} from "./Cart";
 import {useStore} from "./StoreProvider";
 import {observer} from "mobx-react-lite";
-
 const Button = styled.button`
   position: absolute;
   right: 0;
@@ -113,7 +112,7 @@ const UserBar =  observer(function DrawerCustom({props, children}) {
 		return (
 	<UserBarStyled>
 		<form className={'search'}><input type={"search"} placeholder={'Search'} onSubmit={(event => console.log('search'))} /><Button type={"submit"} ><SearchIcon /></Button></form>
-			<Link href={'#'}><LinkStyled className={'button button-primary'}>Sign up</LinkStyled></Link>
+			<LinkStyled onClick={() =>  store.menuStore.toggleStateModal()} className={'button button-primary'}>Sign up</LinkStyled>
 			<div className={'icons_bar'}>
 				<Link href={'/user'}><LinkStyled><UserIcon /></LinkStyled></Link>
 				<Link href={'#'}><LinkStyled><FavIcon /></LinkStyled></Link>

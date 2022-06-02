@@ -45,6 +45,7 @@ export const lists = {
 			name: text(),
 			canManageContent: checkbox({defaultValue: false}),
 			canManageUsers: checkbox({defaultValue: false}),
+			canOrder: checkbox({defaultValue: false}),
 			users: relationship({ref: 'User.role', many: true}),
 		},
 	}),
@@ -164,12 +165,10 @@ export const lists = {
 		}
 	}),
 	OrderItem: list({
-
 		fields: {
 			ref: relationship({
 				ref: 'Product',
 				many: false,
-
 			}),
 			count: integer(),
 			// price: virtual({
@@ -200,12 +199,16 @@ export const lists = {
 					}
 				}
 			}),
-
 		},
-
 	}),
-
 	Order: list({
+		access: {
+			filter: {
+				delete: permissions.canOrder,
+				query: permissions.canOrder,
+				update: permissions.canOrder,
+			}
+		},
 		fields: {
 			number: integer({
 				hooks: {

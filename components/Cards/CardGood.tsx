@@ -110,10 +110,7 @@ const CardGood = observer(function CardGood(props) {
     const store = useStore()
    // @ts-ignore
     const {title} = toJS(props.props)
-    const handleChange = (item:object) => {
-        // console.log(item)
-        store.cartStore.addItem(item)
-    };
+    console.log(props.props)
     return (
         <CardGoodStyled>
             <div className={'product-image'}>

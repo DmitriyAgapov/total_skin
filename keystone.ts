@@ -13,8 +13,9 @@ const {withAuth} = createAuth({
     secretField: 'password',
     listKey: 'User',
     sessionData: `id name role {
-    canManageContent
-    canManageUsers
+        canManageContent
+        canManageUsers
+        canOrder
   }`,
     initFirstItem: {
         fields: ['name', 'email', 'password'],
@@ -34,7 +35,7 @@ const {withAuth} = createAuth({
 // This session object will be made available on the context object used in hooks, access-control,
 // resolvers, etc.
 const session = statelessSessions({
-    // maxAge: SESSION_MAX_AGE,
+    maxAge: SESSION_MAX_AGE,
     // The session secret is used to encrypt cookie data (should be an environment variable)
     // secret: SESSION_SECRET,
     secret: SESSION_SECRET,

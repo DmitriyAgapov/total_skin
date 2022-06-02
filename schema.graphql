@@ -6,6 +6,7 @@ type Role {
   name: String
   canManageContent: Boolean
   canManageUsers: Boolean
+  canOrder: Boolean
   users(
     where: UserWhereInput! = {}
     orderBy: [UserOrderByInput!]! = []
@@ -27,6 +28,7 @@ input RoleWhereInput {
   name: StringFilter
   canManageContent: BooleanFilter
   canManageUsers: BooleanFilter
+  canOrder: BooleanFilter
   users: UserManyRelationFilter
 }
 
@@ -91,6 +93,7 @@ input RoleOrderByInput {
   name: OrderDirection
   canManageContent: OrderDirection
   canManageUsers: OrderDirection
+  canOrder: OrderDirection
 }
 
 enum OrderDirection {
@@ -102,6 +105,7 @@ input RoleUpdateInput {
   name: String
   canManageContent: Boolean
   canManageUsers: Boolean
+  canOrder: Boolean
   users: UserRelateToManyForUpdateInput
 }
 
@@ -121,6 +125,7 @@ input RoleCreateInput {
   name: String
   canManageContent: Boolean
   canManageUsers: Boolean
+  canOrder: Boolean
   users: UserRelateToManyForCreateInput
 }
 

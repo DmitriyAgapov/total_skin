@@ -67,6 +67,10 @@ export default class CartStore {
         this.cartItemCount = value
         // console.log(this.cartItemCount)
     }
+    @action setTotalPrice(value: number) {
+        this.cartItemTotalPrice = value
+        // console.log(this.cartItemCount)
+    }
     @action getItems() {
         return this.cartItems
     }
@@ -75,10 +79,20 @@ export default class CartStore {
         return this.cartItems
     }
     @computed get getcartItemTotalPrice() {
-        let totalprice = 0
-
-            console.log('totalprice',this.cartItems[0])
-
+        let allPrices = []
+        if(this.cartItems.length > 0) {
+            this.cartItems.map((item) => {
+                allPrices.push(item.price)}
+            )
+        }
+        function count(arr) {
+            let sum = 0;
+            arr.forEach(function(item){
+                sum += item
+            })
+            return sum;
+        }
+        this.setTotalPrice(count(allPrices))
         return this.cartItemTotalPrice
     }
     @computed get getCartItemsCount() {

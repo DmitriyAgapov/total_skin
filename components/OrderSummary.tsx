@@ -2,6 +2,8 @@ import Box from "./Block/Box";
 import React from "react";
 import styled from "styled-components";
 import CustomLink from "./Link";
+import {observer} from "mobx-react-lite";
+import {useStore} from "./StoreProvider";
 
 const OrderSummaryStyled = styled.aside`
    
@@ -36,28 +38,28 @@ const OrderSummaryStyled = styled.aside`
   }
   
 `
-
-const OrderSummary = () => {
+const OrderSummary = observer(function OrderSummary() {
+    const store = useStore()
     return (
         <OrderSummaryStyled>
             <Box title={'Order Summary'}>
                 <div className={'order__details'}>
                     <div className={'order__details-item'}>
-                        <span className={'order__details-item--title'}>2 items</span>
-                        <span className={'order__details-item--value'}>$550</span>
+                        <span className={'order__details-item--title'}>{store.cartStore.cartItemCount} items</span>
+                        <span className={'order__details-item--value'}>${store.cartStore.cartItemTotalPrice}</span>
                     </div>
-                    <div className={'order__details-item'}>
-                        <span className={'order__details-item--title'}>Consultation</span>
-                        <span className={'order__details-item--value'}>$500</span>
-                    </div>
-                    <div className={'order__details-item'}>
-                        <span className={'order__details-item--title'}>Delivery</span>
-                        <span className={'order__details-item--value'}>$500</span>
-                    </div>
+                    {/*<div className={'order__details-item'}>*/}
+                    {/*    <span className={'order__details-item--title'}>Consultation</span>*/}
+                    {/*    <span className={'order__details-item--value'}>$500</span>*/}
+                    {/*</div>*/}
+                    {/*<div className={'order__details-item'}>*/}
+                    {/*    <span className={'order__details-item--title'}>Delivery</span>*/}
+                    {/*    <span className={'order__details-item--value'}>$500</span>*/}
+                    {/*</div>*/}
                 </div>
                 <div className={'order__details-total'}>
                     <span className={'order__details-total--title'}>Total</span>
-                    <span className={'order__details-total--value'}>$500</span>
+                    <span className={'order__details-total--value'}>${store.cartStore.cartItemTotalPrice}</span>
                 </div>
                 <div className={'order__details-actions'}>
                     <CustomLink href={'/shop/product'} type={'primary'} text={'Checkout'} />
@@ -67,5 +69,5 @@ const OrderSummary = () => {
             </Box>
         </OrderSummaryStyled>
     )
-}
+})
 export default OrderSummary
